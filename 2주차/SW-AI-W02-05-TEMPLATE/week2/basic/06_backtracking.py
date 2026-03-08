@@ -23,38 +23,23 @@
 """
 
 def combinations(n, k):
-    """
-    1부터 n까지 숫자 중 k개를 선택하는 모든 조합 찾기
-    
-    Args:
-        n: 전체 숫자 개수
-        k: 선택할 개수
-    
-    Returns:
-        모든 조합의 리스트
-    """
     result = []
     
     def backtrack(start, current_combination):
-        """
-        백트랙킹 헬퍼 함수
-        
-        Args:
-            start: 탐색을 시작할 숫자
-            current_combination: 현재까지 선택한 숫자들
-        """
-        # TODO: base case - k개를 모두 선택했으면 결과에 추가
-        pass
-        
-        # TODO: start부터 n까지 숫자를 하나씩 시도
-        ## TODO: 백트랙킹 3단계 구현
-        ## 1. 선택(Choose)
-        ## 2. 탐색(Explore)
-        ## 3. 취소(Unchoose)
-        pass
-    
+        if len(current_combination) == k:
+            result.append(current_combination[:])
+            return
+
+        for num in range(start, n + 1):
+            current_combination.append(num)
+            backtrack(num + 1, current_combination)
+            current_combination.pop()
+
     backtrack(1, [])
     return result
+
+    
+    
 
 def combinations_itertools_compare(n, k):
     """
