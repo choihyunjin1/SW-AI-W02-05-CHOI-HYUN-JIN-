@@ -127,7 +127,7 @@ def is_prime(n):
     i = 3
     while i * i <= n:
         if n % i == 0:
-            return Falsez
+            return False
         i += 2
     
     return True
