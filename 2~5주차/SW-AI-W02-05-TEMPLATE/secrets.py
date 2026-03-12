@@ -17,7 +17,7 @@ GitHub Issues 생성을 위한 설정 상수
 # GitHub Personal Access Token
 # 생성 방법: https://github.com/settings/tokens
 # 필요 권한: repo (전체)
-GITHUB_TOKEN = ""
+GITHUB_TOKEN = "your_token_here"
 
 # 레포지토리 소유자 (GitHub 사용자명 또는 Organization 이름)
 REPO_OWNER = "choihyunjin1"
@@ -25,4 +25,5 @@ REPO_OWNER = "choihyunjin1"
 # 레포지토리 이름
 REPO_NAME = "SW-AI-W02-05-CHOI-HYUN-JIN-"
 # ====================================================
+
 
