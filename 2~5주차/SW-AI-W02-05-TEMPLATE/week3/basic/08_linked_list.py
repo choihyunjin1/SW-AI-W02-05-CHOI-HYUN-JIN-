@@ -26,12 +26,12 @@ class Node:
     """연결 리스트의 노드"""
     def __init__(self, data):
         self.data = data
-        self.next = None
+        self.next: 'Node' | None = None
 
 class LinkedList:
     """단순 연결 리스트"""
     def __init__(self):
-        self.head = None
+        self.head: Node | None = None
         return
     def append(self, data):
         """리스트 끝에 노드 추가"""
@@ -39,17 +39,19 @@ class LinkedList:
         
         # TODO: 리스트가 비어있으면 head를 new_node로 설정
         pass
-        if self.head == None:
+        if self.head is None:
             self.head = new_node
             return
         # TODO: 마지막 노드 찾기
         pass
+        # head가 None이 아님이 위에서 보장됨
         current = self.head
-        while current.next != None:
-            current = current.next
-        # TODO: 마지막 노드의 next를 new_node로 설정
-        pass
-        current.next= new_node
+        if current is not None:
+            while current.next is not None:
+                current = current.next
+            # TODO: 마지막 노드의 next를 new_node로 설정
+            pass
+            current.next = new_node
     
     def print_list(self):
         """리스트의 모든 값 출력"""
@@ -59,7 +61,7 @@ class LinkedList:
         pass
         current = self.head
 
-        while current != None:
+        while current is not None:
         
             values.append(current.data)
             current = current.next
