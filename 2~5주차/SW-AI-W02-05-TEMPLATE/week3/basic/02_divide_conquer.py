@@ -3,7 +3,8 @@
 
 문제 설명:
 - 분할 정복(Divide and Conquer) 방식으로 배열의 최댓값을 찾습니다.
-- 배열을 반으로 나누고, 각 부분의 최댓값을 구한 후 비교합니다.
+- 배열을 반으로 나/'
+누고, 각 부분의 최댓값을 구한 후 비교합니다.
 
 입력:
 - arr: 정수 배열
@@ -37,18 +38,21 @@ def find_max_divide_conquer(arr, left, right):
     """
     # TODO: base case - 원소가 하나면 그 값 반환
     pass
+    if left == right:
+        return arr[left] 
     
     # TODO: 중간 지점 계산
     pass
-    
+    mid = (right+left) // 2
     # TODO: 왼쪽 절반의 최댓값
     pass
-        
+    maxleft = find_max_divide_conquer(arr, left, mid)
     # TODO: 오른쪽 절반의 최댓값
     pass
-    
+    maxright = find_max_divide_conquer(arr, mid+1,right)
     # TODO: 둘 중 큰 값 반환
-    pass
+    pass 
+    return max(maxleft,maxright)
 
 # 테스트 케이스
 if __name__ == "__main__":
