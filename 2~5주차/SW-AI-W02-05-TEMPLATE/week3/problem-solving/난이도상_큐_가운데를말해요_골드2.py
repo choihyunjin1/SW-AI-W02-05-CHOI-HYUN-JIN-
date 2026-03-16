@@ -1,21 +1,19 @@
-# 큐 - 가운데를 말해요 (백준 골드2)
-# 문제 링크: https://www.acmicpc.net/problem/1655
+#큐 - 가운데를 말해요 (백준 골드2)
+#문제 링크: https://www.acmicpc.net/problem/1655
 
-# n = int(input())
-# list =[]
+n = int(input())
+list =[]
 
-# for i in range(1,n+1):
-#     list.append(int(input()))
-#     list.sort()
-#     mid = (i) //2
-#     if len(list) % 2 == 0:
-#         print(f"{list[mid]}")
-#     else :
-#         print(f"{list[mid]}")
+for i in range(1,n+1):
+    list.append(int(input()))
+    list.sort()
+    mid = (i) //2
+    if len(list) % 2 == 0:
+        print(f"{list[mid]}")
+    else :
+        print(f"{list[mid]}")
 
 
-# 힙 - 가운데를 말해요 (백준 골드2)
-# 문제 링크: https://www.acmicpc.net/problem/1655
 
 import sys
 import heapq
