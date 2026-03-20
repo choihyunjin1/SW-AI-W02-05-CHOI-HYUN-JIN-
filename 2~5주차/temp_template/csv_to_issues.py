@@ -86,7 +86,8 @@ def create_github_issue(repo_owner, repo_name, token, title, content, week_num):
     
     data = {
         'title': issue_title,
-        'body': issue_body
+        'body': issue_body,
+        'labels': [f'week{week_num}']
     }
     
     response = requests.post(url, headers=headers, data=json.dumps(data))

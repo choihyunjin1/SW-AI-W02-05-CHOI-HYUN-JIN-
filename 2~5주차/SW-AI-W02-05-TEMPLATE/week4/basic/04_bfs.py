@@ -48,11 +48,24 @@ def bfs(graph, start):
     # TODO: 큐 생성 및 시작 정점 추가
     ## 방문한 정점 집합
     pass
+    deque([start])
+    
+    visited.append(start)
 
+    queue = deque([start])
+
+    while queue:
+        current = queue.popleft()
     # TODO: 큐가 빌 때까지 반복
+        deque(graph[current])
+        for next_node in graph[current]:
     ## 큐에서 정점 꺼내기
     ## 인접한 정점들 확인
-    ## 방문하지 않은 정점이면 큐에 추가
+            if next_node not in visited:
+                visited.append(next_node)
+                queue.append(next_node)
+    
+    
     pass
     
     return visited

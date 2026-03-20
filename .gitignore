@@ -1,0 +1,12 @@
+# Python
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# PyInstaller
+**/build/
+**/dist/
+*.spec
+
+# User specific build folder
+.exe 배포판/

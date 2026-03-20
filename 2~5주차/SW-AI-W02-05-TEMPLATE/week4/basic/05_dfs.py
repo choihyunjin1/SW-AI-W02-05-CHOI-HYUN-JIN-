@@ -44,12 +44,20 @@ def dfs(graph, start, visited=None):
     """
     # TODO: visited가 None이면 초기화
     pass
-    
+    if visited is None:
+        visited = []
     # TODO: 현재 정점 방문
     pass
-    
+    visited.append(start)
+
+
+
+
     # TODO: 인접한 정점들에 대해 재귀
     ## 방문하지 않은 정점이면 재귀 호출
+    for next_node in graph[start]:
+        if next_node not in visited:
+            dfs(graph, next_node, visited)
     pass
     
     return visited
