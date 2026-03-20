@@ -3,7 +3,6 @@ from tkinter import ttk, font
 import time
 
 # --- 공통 UI 프레임워크 (내재화) ---
-
 class BaseVisualizer(tk.Tk):
     def __init__(self, title="알고리즘 시각화", width=1200, height=750):
         super().__init__()

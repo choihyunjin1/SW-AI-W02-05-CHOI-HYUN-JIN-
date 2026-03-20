@@ -10,3 +10,10 @@
 
 # User specific build folder
 .exe 배포판/
+
+# Mac app bundles (PyInstaller output)
+**/*.app/
+00_맥_최종_배포용/
+00_윈도우_최종_배포용/
+week4_학습도구/맥작업용/00_맥_최종_배포용/
+week4_학습도구/맥작업용/*.app/

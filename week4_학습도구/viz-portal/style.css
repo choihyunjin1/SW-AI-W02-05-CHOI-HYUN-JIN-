@@ -1,0 +1,300 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+:root {
+    --bg-color: #0d1117;
+    --card-bg: rgba(22, 27, 34, 0.8);
+    --border-color: rgba(48, 54, 61, 0.8);
+    --text-primary: #f0f6fc;
+    --text-secondary: #8b949e;
+    --accent-color: #58a6ff;
+    --accent-glow: rgba(88, 166, 255, 0.3);
+    --success-color: #3fb950;
+    --warning-color: #d29922;
+    --error-color: #f85149;
+    --code-bg: #161b22;
+    --sidebar-width: 350px;
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    overflow: hidden;
+    height: 100vh;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+/* Header */
+header {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(90deg, #58a6ff, #bc8cff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.controls-main {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+button {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all var(--transition-speed);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+button:hover {
+    background: var(--border-color);
+    border-color: var(--text-secondary);
+}
+
+button.primary {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+}
+
+button.primary:hover {
+    background: #4a9eff;
+    box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Main Layout */
+main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* Visualization Canvas */
+#viz-container {
+    flex: 1;
+    position: relative;
+    background: radial-gradient(circle at center, #161b22 0%, #0d1117 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+#canvas-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+.status-bar {
+    padding: 0.75rem 1.5rem;
+    background: rgba(13, 17, 23, 0.6);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.9rem;
+    color: var(--accent-color);
+    font-weight: 600;
+}
+
+/* Sidebar (Code & State) */
+aside {
+    width: var(--sidebar-width);
+    border-left: 1px solid var(--border-color);
+    background: var(--card-bg);
+    display: flex;
+    flex-direction: column;
+    z-index: 90;
+}
+
+.panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 0.75rem 1rem;
+    background: rgba(48, 54, 61, 0.3);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.panel-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+/* Code Display */
+pre {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    background: transparent;
+    color: var(--text-primary);
+}
+
+.code-line {
+    display: block;
+    padding: 0 0.5rem;
+    border-left: 3px solid transparent;
+}
+
+.code-line.active {
+    background: rgba(56, 139, 253, 0.15);
+    border-left-color: var(--accent-color);
+}
+
+/* State Display */
+#state-display {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+}
+
+.state-item {
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.state-key { color: var(--text-secondary); }
+.state-val { color: var(--accent-color); font-weight: 500; }
+
+/* Dashboard / Modal */
+#dashboard-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13, 17, 23, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 900px;
+    width: 90%;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.dashboard-subtitle {
+    color: var(--text-secondary);
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+.algo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.algo-card {
+    background: rgba(48, 54, 61, 0.2);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.algo-card:hover {
+    background: rgba(56, 139, 253, 0.1);
+    border-color: var(--accent-color);
+    transform: translateY(-4px);
+}
+
+.algo-icon {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.algo-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.algo-desc {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% { r: 20; opacity: 0.5; }
+    100% { r: 40; opacity: 0; }
+}
+
+.active-node-ring {
+    fill: none;
+    stroke: var(--accent-color);
+    stroke-width: 2;
+    animation: pulse 1s infinite;
+}
+
+/* Mobile Warning */
+@media (max-width: 768px) {
+    body::after {
+        content: "Please view on a desktop for the best experience.";
+        position: fixed;
+        inset: 0;
+        background: var(--bg-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        text-align: center;
+        z-index: 1000;
+    }
+}
