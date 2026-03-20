@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>알고리즘 시각화 포털 | AlgoViz</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="logo">AlgoViz</div>
+            <div class="controls-main">
+                <button id="btn-back" title="목록으로">← Home</button>
+                <button id="btn-play" class="primary">▶ Play</button>
+                <button id="btn-step">⏭ Step</button>
+                <button id="btn-reset">🔄 Reset</button>
+                <input type="range" id="speed-scale" min="100" max="2000" value="800" style="width: 100px;">
+            </div>
+        </header>
+
+        <main>
+            <section id="viz-container">
+                <div id="canvas-wrapper">
+                    <svg id="viz-svg"></svg>
+                </div>
+                <div id="status-bar" class="status-bar">알고리즘을 선택하고 시작하세요.</div>
+            </section>
+
+            <aside>
+                <div class="panel">
+                    <div class="panel-header">Python Code</div>
+                    <div class="panel-content">
+                        <pre id="code-content"></pre>
+                    </div>
+                </div>
+                <div class="panel" style="flex: 0 0 250px; border-top: 1px solid var(--border-color);">
+                    <div class="panel-header">변수 상태</div>
+                    <div class="panel-content">
+                        <div id="state-display"></div>
+                    </div>
+                </div>
+            </aside>
+        </main>
+
+        <!-- Dashboard Overlay -->
+        <div id="dashboard-overlay">
+            <div class="dashboard-card">
+                <h1 class="dashboard-title">Algorithm Visualization</h1>
+                <p class="dashboard-subtitle">맥에서 바로 확인하는 6가지 필수 알고리즘 시각화 프로그램</p>
+                
+                <div class="algo-grid">
+                    <div class="algo-card" data-algo="binary_tree">
+                        <span class="algo-icon">🌳</span>
+                        <h3 class="algo-name">이진 트리 순회</h3>
+                        <p class="algo-desc">Preorder, Inorder, Postorder 순회 과정을 시각화합니다.</p>
+                    </div>
+                    <div class="algo-card" data-algo="bst">
+                        <span class="algo-icon">🔍</span>
+                        <h3 class="algo-name">BST 검색</h3>
+                        <p class="algo-desc">이진 탐색 트리에서 값을 찾아가는 과정을 확인합니다.</p>
+                    </div>
+                    <div class="algo-card" data-algo="graph_basic">
+                        <span class="algo-icon">🕸️</span>
+                        <h3 class="algo-name">그래프 기본 탐색</h3>
+                        <p class="algo-desc">기본적인 그래프 탐색 메커니즘을 시각화합니다.</p>
+                    </div>
+                    <div class="algo-card" data-algo="bfs">
+                        <span class="algo-icon">🌊</span>
+                        <h3 class="algo-name">너비 우선 탐색 (BFS)</h3>
+                        <p class="algo-desc">Queue를 이용한 너비 우선 탐색 과정을 시각화합니다.</p>
+                    </div>
+                    <div class="algo-card" data-algo="dfs">
+                        <span class="algo-icon">🔦</span>
+                        <h3 class="algo-name">깊이 우선 탐색 (DFS)</h3>
+                        <p class="algo-desc">Stack을 이용한 깊이 우선 탐색 과정을 시각화합니다.</p>
+                    </div>
+                    <div class="algo-card" data-algo="topo_sort">
+                        <span class="algo-icon">📐</span>
+                        <h3 class="algo-name">위상 정렬</h3>
+                        <p class="algo-desc">의존성이 있는 작업을 정렬하는 과정을 시각화합니다.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Logic -->
+    <script src="core.js"></script>
+    
+    <!-- Algorithms (will be loaded dynamically or included) -->
+    <script src="algorithms/binary_tree.js"></script>
+    <script src="algorithms/bst.js"></script>
+    <script src="algorithms/graph_basic.js"></script>
+    <script src="algorithms/bfs.js"></script>
+    <script src="algorithms/dfs.js"></script>
+    <script src="algorithms/topo_sort.js"></script>
+
+    <script>
+        // App Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            const dashboard = document.getElementById('dashboard-overlay');
+            const algoCards = document.querySelectorAll('.algo-card');
+            const btnBack = document.getElementById('btn-back');
+
+            algoCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const algoId = card.dataset.algo;
+                    dashboard.style.display = 'none';
+                    loadAlgorithm(algoId);
+                });
+            });
+
+            btnBack.addEventListener('click', () => {
+                if (window.currentVisualizer) window.currentVisualizer.stop();
+                dashboard.style.display = 'flex';
+            });
+        });
+
+        function loadAlgorithm(id) {
+            console.log('Loading algorithm:', id);
+            if (window.currentVisualizer) window.currentVisualizer.stop();
+            
+            const registry = {
+                'binary_tree': BinaryTreeVisualizer,
+                'bst': BSTVisualizer,
+                'graph_basic': GraphVisualizer,
+                'bfs': BFSVisualizer,
+                'dfs': DFSVisualizer,
+                'topo_sort': TopoSortVisualizer
+            };
+
+            const VisualizerClass = registry[id];
+            if (VisualizerClass) {
+                window.currentVisualizer = new VisualizerClass();
+                window.currentVisualizer.init();
+            }
+        }
+    </script>
+</body>
+</html>
