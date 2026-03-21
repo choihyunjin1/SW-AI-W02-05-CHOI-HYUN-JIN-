@@ -53,8 +53,8 @@ def topological_sort(vertices, edges):
     queue = deque()
 
     for i in range(vertices):
-        if in_degree[i] == 0:
-            queue.append(i)
+        if in_degree[i] == 0:3
+        queue.append(i)
     result = []
     
     # TODO: 큐가 빌 때까지 반복
