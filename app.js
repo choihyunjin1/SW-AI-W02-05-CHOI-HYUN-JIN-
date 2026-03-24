@@ -49,6 +49,10 @@ const SELECTORS = {
   serviceReasonBenefit: "#serviceReasonBenefit",
   serviceReasonCompare: "#serviceReasonCompare",
   serviceHomeButton: "#serviceHomeButton",
+  openWorkbenchButton: "#openWorkbenchButton",
+  closeWorkbenchButton: "#closeWorkbenchButton",
+  workbenchShell: "#workbenchShell",
+  workbenchBackdrop: "#workbenchBackdrop",
   realDomRoot: "#realDomRoot",
   realDomOverlay: "#realDomOverlay",
   testDomRoot: "#testDomRoot",
@@ -1325,6 +1329,10 @@ function getElements() {
     serviceReasonBenefit: document.querySelector(SELECTORS.serviceReasonBenefit),
     serviceReasonCompare: document.querySelector(SELECTORS.serviceReasonCompare),
     serviceHomeButton: document.querySelector(SELECTORS.serviceHomeButton),
+    openWorkbenchButton: document.querySelector(SELECTORS.openWorkbenchButton),
+    closeWorkbenchButton: document.querySelector(SELECTORS.closeWorkbenchButton),
+    workbenchShell: document.querySelector(SELECTORS.workbenchShell),
+    workbenchBackdrop: document.querySelector(SELECTORS.workbenchBackdrop),
     realDomRoot: document.querySelector(SELECTORS.realDomRoot),
     realDomOverlay: document.querySelector(SELECTORS.realDomOverlay),
     testDomRoot: document.querySelector(SELECTORS.testDomRoot),
@@ -3728,6 +3736,19 @@ function selectPath(path) {
   renderAllPanels();
 }
 
+function setWorkbenchOpen(open) {
+  if (!open && state.ui.workbenchShell?.contains(document.activeElement)) {
+    document.activeElement.blur();
+  }
+
+  document.body.classList.toggle("is-workbench-open", open);
+
+  if (state.ui.workbenchShell) {
+    state.ui.workbenchShell.setAttribute("aria-hidden", open ? "false" : "true");
+    state.ui.workbenchShell.toggleAttribute("inert", !open);
+  }
+}
+
 function findSelectableMeta(target, stopNode) {
   let current = target;
 
@@ -3768,6 +3789,30 @@ function bindEvents() {
       });
     });
   }
+
+  if (state.ui.openWorkbenchButton) {
+    state.ui.openWorkbenchButton.addEventListener("click", () => {
+      setWorkbenchOpen(true);
+    });
+  }
+
+  if (state.ui.closeWorkbenchButton) {
+    state.ui.closeWorkbenchButton.addEventListener("click", () => {
+      setWorkbenchOpen(false);
+    });
+  }
+
+  if (state.ui.workbenchBackdrop) {
+    state.ui.workbenchBackdrop.addEventListener("click", () => {
+      setWorkbenchOpen(false);
+    });
+  }
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setWorkbenchOpen(false);
+    }
+  });
 
   if (state.ui.realDomRoot) {
     state.ui.realDomRoot.addEventListener("click", (event) => {
@@ -3972,6 +4017,7 @@ function setupMutationObserver() {
 function init() {
   state.ui = getElements();
   bindEvents();
+  setWorkbenchOpen(false);
   setupMutationObserver();
   resetToSample({
     clearHistory: true

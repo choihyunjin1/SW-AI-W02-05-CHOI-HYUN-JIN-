@@ -32,6 +32,7 @@
           <span>찜 12</span>
           <span>장바구니 01</span>
           <span>내 계정</span>
+          <button id="openWorkbenchButton" class="button button--small store-utility__button" type="button">검증 패널 열기</button>
         </div>
       </header>
 
@@ -103,6 +104,10 @@
               <span></span>
               <span></span>
             </div>
+            <div class="stage-shell__label">
+              <span>실제 영역</span>
+              <strong>사용자에게 보이는 서비스 화면</strong>
+            </div>
             <div class="dom-stage dom-stage--service">
               <div id="realDomRoot" class="dom-surface dom-surface--service" aria-label="Live Service Screen"></div>
               <div id="realDomOverlay" class="dom-overlay" aria-hidden="true"></div>
@@ -112,48 +117,189 @@
       </main>
     </div>
 
-    <div class="workbench-shell" aria-hidden="true">
-      <button id="patchButton" type="button">Patch 적용</button>
-      <button id="backButton" type="button">뒤로가기</button>
-      <button id="forwardButton" type="button">앞으로가기</button>
-      <button id="resetButton" type="button">초기 상태 복원</button>
-      <button id="syncSourceButton" type="button">테스트 영역에 반영</button>
-      <button id="playbackToggleButton" type="button">재생</button>
-      <button id="playbackNextButton" type="button">다음 Step</button>
-      <button id="playbackResetButton" type="button">처음으로</button>
-      <button id="demoTourButton" type="button">Demo Tour 시작</button>
-      <button id="demoFocusButton" type="button">핵심 Patch 보기</button>
+    <button id="workbenchBackdrop" class="workbench-backdrop" type="button" aria-label="검증 패널 닫기"></button>
+    <aside id="workbenchShell" class="workbench-shell" aria-hidden="true" aria-label="검증 패널">
+      <div class="workbench-panel">
+        <header class="workbench-panel__header">
+          <div>
+            <p class="section-label">Admin Console</p>
+            <h2>Virtual DOM 검증 패널</h2>
+            <p class="workbench-panel__copy">서비스는 그대로 두고, 테스트 영역과 patch 로그를 이 패널에서 검증합니다.</p>
+          </div>
+          <button id="closeWorkbenchButton" class="button button--ghost button--small" type="button">닫기</button>
+        </header>
 
-      <strong id="currentStateLabel">초기 상태</strong>
-      <p id="currentStateDescription">앱 초기화 전</p>
-      <span id="patchSummary">초기화 전</span>
-      <strong id="historyMeta">0 / 0</strong>
-      <strong id="patchCountMeta">0</strong>
-      <span id="treeMeta">nodes: 0</span>
-      <span id="depthMeta">depth: 0</span>
-      <strong id="observerMeta">Idle</strong>
-      <p id="editorMessage">ready</p>
-      <p id="playbackStatus">idle</p>
-      <p id="demoTourStatus">idle</p>
+        <div class="workbench-panel__body">
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Run State</p>
+                <h3 id="currentStateLabel">초기 상태</h3>
+              </div>
+              <span id="patchSummary" class="chip chip--slate">초기화 전</span>
+            </div>
+            <p id="currentStateDescription" class="helper-text">앱 초기화 전</p>
+            <div class="workbench-meta">
+              <div class="workbench-meta__item">
+                <span>History</span>
+                <strong id="historyMeta">0 / 0</strong>
+              </div>
+              <div class="workbench-meta__item">
+                <span>Patch</span>
+                <strong id="patchCountMeta">0</strong>
+              </div>
+              <div class="workbench-meta__item">
+                <span>Tree</span>
+                <strong id="treeMeta">nodes: 0</strong>
+              </div>
+              <div class="workbench-meta__item">
+                <span>Depth</span>
+                <strong id="depthMeta">depth: 0</strong>
+              </div>
+              <div class="workbench-meta__item">
+                <span>Observer</span>
+                <strong id="observerMeta">Idle</strong>
+              </div>
+            </div>
+          </section>
 
-      <div id="testDomRoot" contenteditable="true" aria-label="Test Area"></div>
-      <div id="testDomOverlay" aria-hidden="true"></div>
-      <textarea id="sourceEditor"></textarea>
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Controls</p>
+                <h3>Patch / History 제어</h3>
+              </div>
+            </div>
+            <div class="toolbar-actions">
+              <button id="patchButton" class="button button--primary" type="button">Patch 적용</button>
+              <button id="backButton" class="button" type="button">뒤로가기</button>
+              <button id="forwardButton" class="button" type="button">앞으로가기</button>
+              <button id="resetButton" class="button button--ghost" type="button">초기 상태 복원</button>
+            </div>
+            <div class="toolbar-actions toolbar-actions--compact">
+              <button id="syncSourceButton" class="button button--small" type="button">테스트 영역에 반영</button>
+              <button id="playbackToggleButton" class="button button--small" type="button">재생</button>
+              <button id="playbackNextButton" class="button button--small" type="button">다음 Step</button>
+              <button id="playbackResetButton" class="button button--small" type="button">처음으로</button>
+              <button id="demoTourButton" class="button button--small" type="button">Demo Tour 시작</button>
+              <button id="demoFocusButton" class="button button--small" type="button">핵심 Patch 보기</button>
+            </div>
+            <div class="workbench-inline-status">
+              <p id="editorMessage" class="helper-text">ready</p>
+              <p id="playbackStatus" class="helper-text">idle</p>
+              <p id="demoTourStatus" class="helper-text">idle</p>
+            </div>
+          </section>
 
-      <div id="diffLogPanel"></div>
-      <div id="historyPanel"></div>
-      <div id="treePanel"></div>
-      <div id="dfsPanel"></div>
-      <div id="bfsPanel"></div>
-      <div id="explanationPanel"></div>
-      <div id="scenarioPanel"></div>
-      <div id="patchTimelinePanel"></div>
-      <div id="performancePanel"></div>
-      <div id="inspectorPanel"></div>
-      <div id="demoBriefingPanel"></div>
-      <div id="demoSignalPanel"></div>
-      <div id="pipelinePanel"></div>
-    </div>
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Real / Test</p>
+                <h3>실제 영역과 테스트 영역</h3>
+              </div>
+            </div>
+            <div class="workbench-grid workbench-grid--two">
+              <article class="workbench-subcard">
+                <div class="workbench-subcard__header">
+                  <strong>실제 영역</strong>
+                  <span class="chip chip--slate">메인 서비스 화면</span>
+                </div>
+                <p class="helper-text">왼쪽 서비스 화면이 실제 영역입니다. Patch를 적용하면 메인 서비스 UI가 직접 갱신됩니다.</p>
+              </article>
+              <article class="workbench-subcard">
+                <div class="workbench-subcard__header">
+                  <strong>테스트 영역</strong>
+                  <span class="chip chip--blue">수정 가능</span>
+                </div>
+                <div class="workbench-test-stage">
+                  <div id="testDomRoot" class="dom-surface dom-surface--editable" contenteditable="true" aria-label="Test Area"></div>
+                  <div id="testDomOverlay" class="dom-overlay" aria-hidden="true"></div>
+                </div>
+                <label class="sr-only" for="sourceEditor">HTML Source Editor</label>
+                <textarea id="sourceEditor" class="source-editor" spellcheck="false"></textarea>
+              </article>
+            </div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Scenario</p>
+                <h3>서비스 시나리오</h3>
+              </div>
+            </div>
+            <div id="scenarioPanel" class="scenario-grid"></div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Pipeline</p>
+                <h3>Diff / Patch 흐름</h3>
+              </div>
+            </div>
+            <div id="pipelinePanel"></div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Timeline</p>
+                <h3>Patch 재생</h3>
+              </div>
+            </div>
+            <div id="patchTimelinePanel" class="timeline-panel"></div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Logs</p>
+                <h3>Diff 로그 / State History</h3>
+              </div>
+            </div>
+            <div class="workbench-grid workbench-grid--two">
+              <div id="diffLogPanel" class="log-panel"></div>
+              <div id="historyPanel" class="history-panel"></div>
+            </div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Tree</p>
+                <h3>Virtual DOM 트리 / 순회</h3>
+              </div>
+            </div>
+            <div class="workbench-grid workbench-grid--two">
+              <div id="treePanel" class="tree-panel"></div>
+              <div class="workbench-stack">
+                <div id="dfsPanel" class="traversal-panel"></div>
+                <div id="bfsPanel" class="traversal-panel"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="workbench-card">
+            <div class="workbench-card__header">
+              <div>
+                <p class="section-label">Metrics</p>
+                <h3>설명 / 성능 / 인스펙터</h3>
+              </div>
+            </div>
+            <div class="workbench-grid workbench-grid--two">
+              <div id="performancePanel" class="performance-panel"></div>
+              <div id="inspectorPanel" class="inspector-panel"></div>
+            </div>
+            <div class="workbench-grid workbench-grid--two">
+              <div id="demoBriefingPanel"></div>
+              <div id="demoSignalPanel" class="signal-grid"></div>
+            </div>
+            <div id="explanationPanel" class="explanation-panel"></div>
+          </section>
+        </div>
+      </div>
+    </aside>
 
     <template id="treeNodeTemplate">
       <div class="tree-node">

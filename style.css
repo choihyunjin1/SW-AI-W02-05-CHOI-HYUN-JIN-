@@ -109,6 +109,10 @@ body {
   font-size: 0.9rem;
 }
 
+.store-utility__button {
+  white-space: nowrap;
+}
+
 .store-nav,
 .store-utility {
   display: flex;
@@ -389,6 +393,34 @@ body {
   background: rgba(67, 82, 95, 0.2);
 }
 
+.stage-shell__label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 6px 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.76);
+}
+
+.stage-shell__label span,
+.stage-shell__label strong {
+  display: block;
+}
+
+.stage-shell__label span {
+  color: var(--ink-soft);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.stage-shell__label strong {
+  font-size: 0.96rem;
+}
+
 .dom-stage--service {
   min-height: 840px;
 }
@@ -410,8 +442,153 @@ body {
   display: none;
 }
 
+.workbench-backdrop {
+  position: fixed;
+  inset: 0;
+  border: 0;
+  background: rgba(15, 22, 32, 0.32);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: 59;
+}
+
 .workbench-shell {
-  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: min(860px, 100vw);
+  height: 100vh;
+  padding: 14px;
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  z-index: 60;
+  pointer-events: none;
+}
+
+.is-workbench-open .workbench-backdrop {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.is-workbench-open .workbench-shell {
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.is-workbench-open {
+  overflow: hidden;
+}
+
+.workbench-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 28px;
+  border: 1px solid rgba(34, 43, 56, 0.08);
+  background: rgba(255, 252, 247, 0.96);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 28px 60px rgba(22, 26, 33, 0.22);
+  overflow: hidden;
+}
+
+.workbench-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 24px 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.workbench-panel__header h2 {
+  margin: 0;
+}
+
+.workbench-panel__copy {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.workbench-panel__body {
+  flex: 1;
+  overflow: auto;
+  padding: 18px 24px 24px;
+  display: grid;
+  gap: 16px;
+}
+
+.workbench-card,
+.workbench-subcard {
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.74);
+}
+
+.workbench-card__header,
+.workbench-subcard__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.workbench-card__header h3 {
+  margin: 0;
+}
+
+.workbench-meta {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.workbench-meta__item {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(244, 239, 231, 0.85);
+  border: 1px solid var(--line);
+}
+
+.workbench-meta__item span,
+.workbench-meta__item strong {
+  display: block;
+}
+
+.workbench-meta__item span {
+  margin-bottom: 6px;
+  color: var(--ink-soft);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.workbench-inline-status {
+  display: grid;
+  gap: 4px;
+  margin-top: 12px;
+}
+
+.workbench-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.workbench-grid--two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.workbench-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.workbench-test-stage {
+  position: relative;
 }
 
 button,
@@ -1844,7 +2021,9 @@ textarea {
   .demo-grid,
   .scenario-grid,
   .briefing-grid,
-  .command-grid {
+  .command-grid,
+  .workbench-grid--two,
+  .workbench-meta {
     grid-template-columns: 1fr;
   }
 }
@@ -1882,6 +2061,21 @@ textarea {
     justify-content: flex-start;
   }
 
+  .workbench-shell {
+    width: 100vw;
+    padding: 0;
+  }
+
+  .workbench-panel {
+    border-radius: 0;
+    height: 100vh;
+  }
+
+  .workbench-panel__header,
+  .workbench-panel__body {
+    padding-inline: 18px;
+  }
+
   .dom-stage--service,
   .dom-surface--service {
     min-height: 680px;
@@ -1901,7 +2095,10 @@ textarea {
   .toolbar-actions,
   .card__header,
   .demo-block__header,
-  .scenario-card__footer {
+  .scenario-card__footer,
+  .workbench-card__header,
+  .workbench-subcard__header,
+  .workbench-panel__header {
     align-items: stretch;
     flex-direction: column;
   }
