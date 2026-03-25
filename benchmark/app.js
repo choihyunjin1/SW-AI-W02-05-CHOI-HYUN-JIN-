@@ -25,7 +25,7 @@ const PATCH_TYPES = {
 
 const GRAPH_POINT_LIMIT = 90;
 const BENCHMARK_BURST_TICKS = 30;
-const BENCHMARK_MAX_CONTINUOUS_MS = 20000;
+const BENCHMARK_MAX_CONTINUOUS_MS = 5000;
 const BENCHMARK_MIN_DELAY_MS = 34;
 const BENCHMARK_TARGET_UTILIZATION = 0.55;
 const BENCHMARK_UI_REFRESH_MS = 90;
@@ -952,6 +952,10 @@ function applyPatches(root, patches, newVNodeRoot) {
   });
   createPatches.forEach((patch) => applyCreatePatch(root, patch));
   reorderPatches.forEach((patch) => applyReorderPatch(root, patch, newVNodeRoot));
+
+  if (state.benchmark.running || state.benchmark.burstRemaining > 0) {
+    state.benchmark.mutationTotals.vdom += patches.length;
+  }
 }
 
 /* -------------------------------------------------------------------------- */
@@ -1183,13 +1187,14 @@ function applyImperativeBenchmarkUpdate(root, model) {
     .map((alert) => `<div class="runtime-alert" data-key="${escapeHTML(alert.id)}">${escapeHTML(alert.text)}</div>`)
     .join("");
 
+  let mutations = 0;
   model.items.forEach((item, index) => {
     const card = cards[index];
 
-    if (card.dataset.key !== String(item.id)) card.dataset.key = item.id;
+    if (card.dataset.key !== String(item.id)) { card.dataset.key = item.id; mutations++; }
     const hotStr = item.hot ? "true" : "false";
-    if (card.dataset.hot !== hotStr) card.dataset.hot = hotStr;
-    if (card.dataset.pressure !== item.pressure) card.dataset.pressure = item.pressure;
+    if (card.dataset.hot !== hotStr) { card.dataset.hot = hotStr; mutations++; }
+    if (card.dataset.pressure !== item.pressure) { card.dataset.pressure = item.pressure; mutations++; }
 
     if (!card._ui) {
       card._ui = {
@@ -1204,20 +1209,20 @@ function applyImperativeBenchmarkUpdate(root, model) {
     }
     const ui = card._ui;
 
-    if (ui.name.textContent !== item.name) ui.name.textContent = item.name;
-    if (ui.lane.textContent !== item.lane) ui.lane.textContent = item.lane;
-    if (ui.message.textContent !== item.message) ui.message.textContent = item.message;
+    if (ui.name.textContent !== item.name) { ui.name.textContent = item.name; mutations++; }
+    if (ui.lane.textContent !== item.lane) { ui.lane.textContent = item.lane; mutations++; }
+    if (ui.message.textContent !== item.message) { ui.message.textContent = item.message; mutations++; }
 
     const priceText = `₩${item.price.toLocaleString("ko-KR")}`;
-    if (ui.meta0.textContent !== priceText) ui.meta0.textContent = priceText;
+    if (ui.meta0.textContent !== priceText) { ui.meta0.textContent = priceText; mutations++; }
 
     const stockText = `${item.stock} left`;
-    if (ui.meta1.textContent !== stockText) ui.meta1.textContent = stockText;
+    if (ui.meta1.textContent !== stockText) { ui.meta1.textContent = stockText; mutations++; }
 
-    if (ui.badge0.textContent !== item.pressure) ui.badge0.textContent = item.pressure;
+    if (ui.badge0.textContent !== item.pressure) { ui.badge0.textContent = item.pressure; mutations++; }
 
     const hotBadge = item.hot ? "hot" : "steady";
-    if (ui.badge1.textContent !== hotBadge) ui.badge1.textContent = hotBadge;
+    if (ui.badge1.textContent !== hotBadge) { ui.badge1.textContent = hotBadge; mutations++; }
 
     if (layoutReadEvery > 0 && index % layoutReadEvery === 0) {
       void card.offsetHeight;
@@ -1226,6 +1231,10 @@ function applyImperativeBenchmarkUpdate(root, model) {
 
   for (let index = 0; index < rootLayoutReads; index += 1) {
     void root.offsetHeight;
+  }
+
+  if (state.benchmark.running || state.benchmark.burstRemaining > 0) {
+    state.benchmark.mutationTotals.redraw += mutations;
   }
 }
 
@@ -1495,30 +1504,7 @@ function stopBenchmark(reason = "manual") {
 
 function setupBenchmarkObservers() {
   Object.values(state.benchmark.observers).forEach((observer) => observer && observer.disconnect());
-
-  state.benchmark.observers.vdom = new MutationObserver((records) => {
-    state.benchmark.mutationTotals.vdom += records.length;
-    scheduleBenchmarkUiRefresh();
-  });
-
-  state.benchmark.observers.redraw = new MutationObserver((records) => {
-    state.benchmark.mutationTotals.redraw += records.length;
-    scheduleBenchmarkUiRefresh();
-  });
-
-  state.benchmark.observers.vdom.observe(state.ui.benchmarkVdomRoot, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    characterData: true
-  });
-
-  state.benchmark.observers.redraw.observe(state.ui.benchmarkDirectRoot, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    characterData: true
-  });
+  state.benchmark.observers = { vdom: null, redraw: null };
 }
 
 function recordBenchmarkEntry(entry) {
