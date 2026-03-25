@@ -1113,7 +1113,11 @@ function mutateItemAttrs(item, tick, index) {
 }
 
 function mutateBenchmarkModel(previousModel, tick, mode) {
-  const next = cloneValue(previousModel);
+  const next = {
+    ...previousModel,
+    items: previousModel.items.map(item => ({ ...item })),
+    summary: { ...previousModel.summary }
+  };
   const length = next.items.length;
   const focusSize = Math.max(1, Math.min(length, Math.round(length * state.benchmark.config.mutationRatio)));
   const focusStart = (tick * 3) % Math.max(length, 1);
@@ -2189,8 +2193,11 @@ function init() {
         let target = mutation.target.nodeType === 3 ? mutation.target.parentElement : mutation.target;
         if (target && target.classList) {
           target.classList.remove("pulse-update");
-          void target.offsetWidth; // Force CSS reflow
-          target.classList.add("pulse-update");
+          requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+              target.classList.add("pulse-update");
+            });
+          });
         }
       });
     });
