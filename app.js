@@ -1,4 +1,4 @@
-﻿/*
+/*
   Virtual DOM + Diff Algorithm Verification App
   Vanilla JavaScript implementation focused on explainability.
 */
@@ -3049,25 +3049,51 @@ function renderTreeNode(vNode) {
   const metaEl = fragment.querySelector(".tree-node__meta");
 
   wrapper.dataset.path = vNode.path;
-  wrapper.style.marginLeft = `${vNode.depth * 14}px`;
+  wrapper.style.paddingLeft = "14px";
   wrapper.classList.toggle("is-active", state.selectedPath === vNode.path);
+
+  // Add diff visual cues if this node is the target of the currently selected patch
+  if (state.selectedPatchIndex != null && state.patches.length > 0) {
+    const patch = state.patches[state.selectedPatchIndex];
+    if (patch && patch.path === vNode.path) {
+      wrapper.classList.add(`is-patched`);
+      wrapper.classList.add(`is-patched-${patch.type.toLowerCase()}`);
+    }
+  }
+
   tagEl.textContent = getNodeDescriptor(vNode);
   pathEl.textContent = vNode.path;
   metaEl.textContent = getReadableNodeSummary(vNode);
-  return fragment;
+  return wrapper;
+}
+
+function buildTreeNested(vNode) {
+  const container = document.createElement("div");
+  container.className = "tree-node-container";
+  
+  const nodeEl = renderTreeNode(vNode);
+  container.appendChild(nodeEl);
+  
+  if (vNode.children && vNode.children.length > 0) {
+    const childrenContainer = document.createElement("div");
+    childrenContainer.className = "tree-children-container";
+    vNode.children.forEach(child => {
+      // Filter out pure string children if they are not VNode objects
+      if (typeof child === 'object' && child !== null) {
+        childrenContainer.appendChild(buildTreeNested(child));
+      }
+    });
+    container.appendChild(childrenContainer);
+  }
+  return container;
 }
 
 function renderTreePanel() {
   const panel = state.ui.treePanel;
   panel.innerHTML = "";
-
-  const dfsOrder = traverseDFS(state.realVNode);
-  dfsOrder.forEach((item) => {
-    const node = findVNodeByPath(state.realVNode, item.path);
-    if (node) {
-      panel.appendChild(renderTreeNode(node));
-    }
-  });
+  if (state.realVNode) {
+    panel.appendChild(buildTreeNested(state.realVNode));
+  }
 }
 
 function renderTraversalSequence(panel, sequence) {

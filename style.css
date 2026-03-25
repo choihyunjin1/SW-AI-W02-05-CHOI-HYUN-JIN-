@@ -1,25 +1,26 @@
 :root {
-  --bg: #f6f3ec;
-  --bg-strong: #fffdf8;
-  --card: rgba(255, 252, 246, 0.86);
-  --ink: #1f2521;
-  --ink-soft: #5b665f;
-  --line: rgba(44, 55, 47, 0.12);
-  --line-strong: rgba(44, 55, 47, 0.22);
-  --shadow: 0 20px 45px rgba(38, 34, 22, 0.08);
-  --blue: #3f6ff2;
-  --green: #1f8f5f;
-  --amber: #b06a19;
-  --rose: #c84d73;
-  --indigo: #5a53dc;
-  --teal: #157f7e;
-  --slate: #43525f;
-  --danger: #b43535;
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --radius-md: 14px;
+  --bg: #f2f2f2;
+  --bg-strong: #ffffff;
+  --card: #ffffff;
+  --ink: #111111;
+  --ink-soft: #707072;
+  --line: #e5e5e5;
+  --line-strong: #cccccc;
+  --shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+  --blue: #0056b3;
+  --green: #111111; /* Changed green to dark ink for primary button feel */
+  --amber: #f87171;
+  --rose: #e11d48;
+  --indigo: #4338ca;
+  --teal: #0f766e;
+  --slate: #475569;
+  --danger: #ef4444;
+  --accent: #ff4500; /* Neon orange for Nike vibe */
+  --radius-xl: 8px;
+  --radius-lg: 4px;
+  --radius-md: 2px;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  --sans: "Manrope", "Segoe UI", sans-serif;
+  --sans: "Helvetica Neue", Helvetica, Arial, sans-serif; /* Standard classic Nike look */
 }
 
 * {
@@ -35,17 +36,11 @@ body {
   min-height: 100vh;
   color: var(--ink);
   font-family: var(--sans);
-  background:
-    radial-gradient(circle at top left, rgba(63, 111, 242, 0.16), transparent 32%),
-    radial-gradient(circle at bottom right, rgba(31, 143, 95, 0.12), transparent 28%),
-    linear-gradient(180deg, #fffdf8 0%, #f6f3ec 54%, #f1ede3 100%);
+  background: var(--bg);
 }
 
 .service-demo-body {
-  background:
-    radial-gradient(circle at top left, rgba(255, 122, 26, 0.16), transparent 28%),
-    radial-gradient(circle at bottom right, rgba(63, 111, 242, 0.18), transparent 30%),
-    linear-gradient(180deg, #fff7ef 0%, #f4efe7 48%, #efe7db 100%);
+  background: var(--bg);
 }
 
 .service-app {
@@ -59,12 +54,11 @@ body {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 20px;
-  padding: 18px 22px;
-  border-radius: 24px;
-  border: 1px solid rgba(34, 43, 56, 0.08);
-  background: rgba(255, 252, 247, 0.78);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 18px 40px rgba(41, 32, 18, 0.08);
+  padding: 16px 24px;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line);
+  background: var(--bg-strong);
+  box-shadow: var(--shadow);
 }
 
 .store-brand {
@@ -139,11 +133,10 @@ body {
 
 .service-copy,
 .stage-shell {
-  border-radius: 30px;
-  border: 1px solid rgba(34, 43, 56, 0.08);
-  background: rgba(255, 252, 247, 0.8);
-  backdrop-filter: blur(14px);
-  box-shadow: 0 24px 50px rgba(41, 32, 18, 0.08);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--line);
+  background: var(--bg-strong);
+  box-shadow: var(--shadow);
 }
 
 .service-copy {
@@ -720,19 +713,22 @@ textarea {
 
 .button {
   border: 1px solid var(--line-strong);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-strong);
   color: var(--ink);
   border-radius: 999px;
-  padding: 11px 18px;
-  font-weight: 700;
+  padding: 11px 24px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
   cursor: pointer;
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  transition: all 180ms ease;
 }
 
 .button:hover:not(:disabled) {
   transform: translateY(-1px);
-  border-color: rgba(44, 55, 47, 0.32);
-  background: rgba(255, 255, 255, 0.94);
+  border-color: var(--ink);
+  background: var(--bg);
 }
 
 .button:disabled {
@@ -742,8 +738,13 @@ textarea {
 
 .button--primary {
   color: white;
-  border-color: transparent;
-  background: linear-gradient(135deg, #2c5ef5, #4586ff);
+  border-color: var(--ink);
+  background: var(--ink);
+}
+
+.button--primary:hover:not(:disabled) {
+  background: #333333;
+  border-color: #333333;
 }
 
 .button--ghost {
@@ -1323,29 +1324,31 @@ textarea {
 .inspector-card {
   padding: 14px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.64);
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: #ffffff;
 }
 
 .log-item,
 .timeline-item,
 .tree-node {
   cursor: pointer;
-  transition: border-color 180ms ease, transform 180ms ease, background 180ms ease;
+  transition: all 180ms ease;
 }
 
 .log-item:hover,
 .timeline-item:hover,
 .tree-node:hover {
-  transform: translateY(-1px);
-  border-color: rgba(44, 55, 47, 0.28);
+  transform: translateX(4px);
+  border-color: var(--accent);
 }
 
 .log-item.is-active,
 .timeline-item.is-active,
 .tree-node.is-active {
-  border-color: rgba(63, 111, 242, 0.46);
-  background: rgba(63, 111, 242, 0.08);
+  border-color: var(--accent);
+  background: #222222;
+  box-shadow: inset 4px 0 0 var(--accent);
 }
 
 .log-item__head,
@@ -1470,10 +1473,11 @@ textarea {
 }
 
 .tree-node {
-  padding: 12px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.66);
+  padding: 10px 14px;
+  border-radius: 0;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-strong);
+  position: relative;
 }
 
 .tree-node__line {
@@ -2123,4 +2127,150 @@ textarea {
   .button {
     width: 100%;
   }
+}
+
+/* ==========================================================
+   STRICT OVERRIDES FOR NIKE STYLE REDESIGN 
+   ========================================================== */
+body, .service-demo-body {
+  background: #f2f2f2 !important;
+  background-image: none !important;
+}
+
+.service-copy, .stage-shell, .workbench-panel, .workbench-card, .workbench-subcard, .card, 
+.hero__content, .hero__metrics, .metric-card, .status-box, 
+.service-benefit, .service-journey, .service-adoption, .service-proof, .service-action, 
+.stage-shell__label, .history-card, .tree-node, .log-item, .timeline-item, 
+.performance-card, .inspector-card, .sequence-list li {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  backdrop-filter: none !important;
+  background-image: none !important;
+}
+
+/* Console & Logs Dark Mode Enforcements (Black backgrounds for logs) */
+.log-item, .timeline-item, .performance-card, .inspector-card {
+  background: #111111 !important;
+  border-color: #333333 !important;
+  color: #ffffff !important;
+}
+.log-item *, .timeline-item *, .performance-card *, .inspector-card * {
+  color: #e0e0e0 !important;
+}
+.log-item strong, .timeline-item strong, .performance-card strong, .inspector-card strong {
+  color: #ffffff !important;
+}
+.log-item.is-active, .timeline-item.is-active {
+  border-left: 4px solid #ff4500 !important;
+  border-top-color: #ff4500 !important;
+  border-right-color: #ff4500 !important;
+  border-bottom-color: #ff4500 !important;
+  background: #222222 !important;
+}
+
+/* History and Tree Item Active state */
+.history-card.is-active, .sequence-list li.is-active, .tree-node.is-active {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+.history-card.is-active *, .sequence-list li.is-active *, .tree-node.is-active * {
+  color: #ffffff !important;
+}
+.tree-node.is-active {
+  border-left: 4px solid #ff4500 !important;
+}
+
+/* Layout specific */
+.store-topbar, .workbench-panel__header {
+  background: #ffffff !important;
+  border-bottom: 2px solid #111111 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.store-brand__mark {
+  border-radius: 2px !important;
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* Buttons */
+.button, .button--primary, .button--ghost {
+  border-radius: 2px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  font-weight: 800 !important;
+}
+.button--primary {
+  background: #111111 !important;
+  color: #ffffff !important;
+  border-color: #111111 !important;
+}
+.button:not(.button--primary) {
+  background: #ffffff !important;
+  border: 1px solid #e5e5e5 !important;
+  color: #111111 !important;
+}
+
+/* Typography Overrides */
+h1, h2, h3, h4, strong {
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+}
+
+/* Badges */
+.chip, .patch-badge, .attribute-pill {
+  border-radius: 2px !important;
+}
+
+/* ==========================================================
+   VIRTUAL DOM TREE & DIFF VISUALIZATION ENHANCEMENTS
+   ========================================================== */
+.tree-node-container {
+  position: relative;
+}
+
+.tree-children-container {
+  padding-left: 20px;
+  border-left: 2px solid #e0e0e0;
+}
+
+.tree-node {
+  margin-bottom: 4px;
+}
+
+/* Diff Visualization Color Coding & Animation */
+@keyframes diffFlash {
+  0% { transform: scale(1); box-shadow: 0 0 0 rgba(0,0,0,0); }
+  50% { transform: scale(1.02); box-shadow: 0 4px 12px rgba(255, 69, 0, 0.4); z-index: 10; }
+  100% { transform: scale(1); box-shadow: 0 0 0 rgba(0,0,0,0); }
+}
+
+.tree-node.is-patched {
+  animation: diffFlash 0.6s ease-out;
+}
+
+/* Green for CREATE */
+.tree-node.is-patched-create {
+  background: rgba(31, 143, 95, 0.15) !important;
+  border-left: 4px solid #1f8f5f !important;
+}
+/* Red for REMOVE */
+.tree-node.is-patched-remove {
+  background: rgba(200, 77, 115, 0.15) !important;
+  border-left: 4px solid #c84d73 !important;
+  opacity: 0.6;
+  text-decoration: line-through;
+}
+/* Yellow/Orange for REPLACE, TEXT, ATTR */
+.tree-node.is-patched-replace,
+.tree-node.is-patched-text,
+.tree-node.is-patched-attr_set,
+.tree-node.is-patched-attr_remove {
+  background: rgba(176, 106, 25, 0.15) !important;
+  border-left: 4px solid #b06a19 !important;
 }
