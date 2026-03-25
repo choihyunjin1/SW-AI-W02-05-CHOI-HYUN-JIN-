@@ -1185,18 +1185,40 @@ function applyImperativeBenchmarkUpdate(root, model) {
 
   model.items.forEach((item, index) => {
     const card = cards[index];
-    card.dataset.key = item.id;
-    card.dataset.hot = item.hot ? "true" : "false";
-    card.dataset.pressure = item.pressure;
-    card.querySelector(".runtime-node__head strong").textContent = item.name;
-    card.querySelector(".runtime-node__head .runtime-badge").textContent = item.lane;
-    card.querySelector("p").textContent = item.message;
-    const metaNodes = card.querySelectorAll(".runtime-node__meta > *");
-    metaNodes[0].textContent = `₩${item.price.toLocaleString("ko-KR")}`;
-    metaNodes[1].textContent = `${item.stock} left`;
-    const badges = card.querySelectorAll(".runtime-node__badges .runtime-badge");
-    badges[0].textContent = item.pressure;
-    badges[1].textContent = item.hot ? "hot" : "steady";
+
+    if (card.dataset.key !== String(item.id)) card.dataset.key = item.id;
+    const hotStr = item.hot ? "true" : "false";
+    if (card.dataset.hot !== hotStr) card.dataset.hot = hotStr;
+    if (card.dataset.pressure !== item.pressure) card.dataset.pressure = item.pressure;
+
+    if (!card._ui) {
+      card._ui = {
+        name: card.querySelector(".runtime-node__head strong"),
+        lane: card.querySelector(".runtime-node__head .runtime-badge"),
+        message: card.querySelector("p"),
+        meta0: card.querySelectorAll(".runtime-node__meta > *")[0],
+        meta1: card.querySelectorAll(".runtime-node__meta > *")[1],
+        badge0: card.querySelectorAll(".runtime-node__badges .runtime-badge")[0],
+        badge1: card.querySelectorAll(".runtime-node__badges .runtime-badge")[1]
+      };
+    }
+    const ui = card._ui;
+
+    if (ui.name.textContent !== item.name) ui.name.textContent = item.name;
+    if (ui.lane.textContent !== item.lane) ui.lane.textContent = item.lane;
+    if (ui.message.textContent !== item.message) ui.message.textContent = item.message;
+
+    const priceText = `₩${item.price.toLocaleString("ko-KR")}`;
+    if (ui.meta0.textContent !== priceText) ui.meta0.textContent = priceText;
+
+    const stockText = `${item.stock} left`;
+    if (ui.meta1.textContent !== stockText) ui.meta1.textContent = stockText;
+
+    if (ui.badge0.textContent !== item.pressure) ui.badge0.textContent = item.pressure;
+
+    const hotBadge = item.hot ? "hot" : "steady";
+    if (ui.badge1.textContent !== hotBadge) ui.badge1.textContent = hotBadge;
+
     if (layoutReadEvery > 0 && index % layoutReadEvery === 0) {
       void card.offsetHeight;
     }
