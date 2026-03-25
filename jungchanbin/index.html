@@ -1053,192 +1053,192 @@
   <main class="app-shell">
     <header class="topbar">
       <div class="topbar__row">
-        <div class="brand">
+        <div class="brand" title="패치레터 스튜디오 브랜드 로고 영역입니다.">
           <div class="brand-mark">P</div>
           <div class="brand-copy">
-            <span class="eyebrow">Patchletter Studio</span>
-            <strong>Virtual DOM Newsletter Editor</strong>
-            <span>발행본과 편집본을 나눠서 관리하고, Patch로 변경분만 반영하는 실전형 데모</span>
+            <span class="eyebrow" title="뉴스레터 발행 과정 시뮬레이터 프로젝트">패치레터 스튜디오 (Patchletter Studio)</span>
+            <strong title="가상 DOM을 통해 이메일을 작성하는 편집기 데모합니다.">Virtual DOM 기반 뉴스레터 에디터</strong>
+            <span title="발행된 원본(Published)과 편집 중인 버전(Editor)을 구분해, 변경점 패치만 반영하는 실무형 데모입니다.">발행본과 편집본을 나눠서 관리하고, 오직 패치(Patch)로 변경분만 반영하는 실전형 데모</span>
           </div>
         </div>
-        <div class="topbar__actions">
-          <button id="patchButton" class="button-primary">Patch 발행</button>
-          <button id="undoButton" class="button-secondary">이전 버전</button>
-          <button id="redoButton" class="button-secondary">다음 버전</button>
-          <button id="resetButton" class="button-ghost">초기 샘플 복원</button>
+        <div class="topbar__actions" title="전역 컨트롤 도구들입니다.">
+          <button id="patchButton" class="button-primary" title="편집 영역의 코드를 비교하여 변경된 부분만 라이브 영역으로 전송합니다.">패치 발행 (Patch Publish)</button>
+          <button id="undoButton" class="button-secondary" title="이전 작업 상태로 되돌립니다.">이전 버전 (Undo)</button>
+          <button id="redoButton" class="button-secondary" title="다음 작업 상태로 넘어갑니다.">다음 버전 (Redo)</button>
+          <button id="resetButton" class="button-ghost" title="모든 작업 내역을 삭제하고 처음 상태로 복원합니다.">초기 샘플 복원</button>
         </div>
       </div>
-      <div class="status-bar">
-        <span class="status-pill"><span class="status-dot"></span>Ready to Publish</span>
-        <span id="statusText">발행된 뉴스레터 DOM을 읽어 초기 Virtual DOM을 만들었습니다.</span>
+      <div class="status-bar" title="현재 도구의 진행 상태를 나타냅니다.">
+        <span class="status-pill" title="에디터가 모든 로드를 끝마쳤습니다."><span class="status-dot"></span>발행 준비 완료 (Ready)</span>
+        <span id="statusText" title="세부 상태 로그입니다.">발행된 뉴스레터 DOM을 읽어 초기 가상 DOM(Virtual DOM)을 만들었습니다.</span>
       </div>
     </header>
 
     <section class="hero">
-      <article class="hero-card">
+      <article class="hero-card" title="핵심 컨셉 소개">
         <div class="hero-copy">
-          <div class="eyebrow">Newsletter Workflow</div>
-          <h1>실제 발행 툴처럼 보이지만, 안에서는 Virtual DOM이 일합니다.</h1>
-          <p>
-            이 페이지는 바닐라 JavaScript만으로 만든 뉴스레터 에디터입니다. 발행본 DOM을 먼저 Virtual DOM으로 바꾸고,
-            편집 중 HTML을 다시 읽어 새 Virtual DOM을 만든 뒤, Diff 알고리즘으로 변경점을 계산하고 실제 DOM에는 바뀐 부분만 Patch합니다.
+          <div class="eyebrow" title="서비스 전체의 데이터 조작 방식을 설명합니다.">뉴스레터 작업 흐름 설계표 (Workflow)</div>
+          <h1 title="단순 에디터가 아닌 가상 구조 연산 모델이 탑재된 에디터입니다.">실제 상용 툴처럼 보이지만, 그 안에서는 가상 구성요소(Virtual DOM) 엔진이 숨쉬고 있습니다.</h1>
+          <p title="이 화면의 기술적 목적입니다.">
+            이 페이지는 React나 Vue 같은 프레임워크 없이 순수 JavaScript만으로 만든 뉴스레터 발행 스튜디오입니다. 발행본(실제) DOM을 먼저 가벼운 가상 DOM 객체로 만들고,
+            사용자가 편집 중인 HTML을 다시 분석해 '새 가상 DOM' 후보를 만든 뒤, 고성능 알고리즘(Diff)으로 최소 변경점만 찾아내어 브라우저에 가해지는 쓰기 비용을 극한으로 줄였습니다.
           </p>
-          <div class="hero-chips">
-            <span class="chip"><strong>step 1</strong> Published DOM -> VDOM</span>
-            <span class="chip"><strong>step 2</strong> Editor HTML -> New VDOM</span>
-            <span class="chip"><strong>step 3</strong> Diff 5 Cases</span>
-            <span class="chip"><strong>step 4</strong> Patch + History</span>
+          <div class="hero-chips" title="동작 프로세스 4단계입니다.">
+            <span class="chip" title="1단계: 렌더링 된 화면을 VDOM으로 역변환합니다."><strong>1단계</strong> 발행 DOM -> 구조화(VDOM)</span>
+            <span class="chip" title="2단계: 에디터에서 방금 수정한 코드로 또 다른 VDOM을 만듭니다."><strong>2단계</strong> 입력된 HTML -> 새로운 VDOM</span>
+            <span class="chip" title="3단계: 두 VDOM을 비교하여 5가지 유형(추가/삭제 등)의 차이점을 도출합니다."><strong>3단계</strong> 5가지 차이점(Diff) 계산</span>
+            <span class="chip" title="4단계: 도출된 내용만 실제 화면에 패치하고 스냅샷을 백업합니다."><strong>4단계</strong> 패치 반영 및 기록 보존</span>
           </div>
         </div>
       </article>
 
-      <aside class="hero-side">
+      <aside class="hero-side" title="핵심 관전 포인트 요약">
         <div>
-          <h2>이 데모에서 보이는 것</h2>
-          <p>과제 요구사항인 실제 영역, 테스트 영역, Patch, Undo/Redo, DOM -> Virtual DOM, Diff, 실제 DOM 반영 흐름을 모두 한 화면에서 보여줍니다.</p>
+          <h2 title="이 페이지에서 확인 가능한 요소들입니다.">이 데모에서 관찰할 수 있는 기능</h2>
+          <p title="상세 설명입니다.">과제 분석 요구사항인 실제 영역과 테스트 영역, 비교 후 부분 업데이트, 취소/다시실행 기능, 가상 돔 엔진의 뼈대를 전문 스튜디오 UI에 통합 구현했습니다.</p>
         </div>
-        <div class="scoreboard">
-          <div class="score">
-            <span>Tech Stack</span>
-            <strong>HTML</strong>
+        <div class="scoreboard" title="데모의 핵심 수치 지표입니다.">
+          <div class="score" title="기술 기반입니다.">
+            <span>기술 스택 (Stack)</span>
+            <strong>순수 HTML</strong>
           </div>
-          <div class="score">
-            <span>Diff Cases</span>
-            <strong>5</strong>
+          <div class="score" title="계산할 수 있는 차이점의 가짓수입니다.">
+            <span>비교 케이스 (Diff)</span>
+            <strong>5종류</strong>
           </div>
-          <div class="score">
-            <span>History</span>
-            <strong>Undo</strong>
+          <div class="score" title="과거로 무한히 돌아갈 수 있습니다.">
+            <span>상태 보존 (History)</span>
+            <strong>무제한 복구</strong>
           </div>
-          <div class="score">
-            <span>Render</span>
-            <strong>Patch</strong>
+          <div class="score" title="부하가 심한 재출력을 피하고 부분 갱신합니다.">
+            <span>화면 렌더링 방식</span>
+            <strong>구멍 패치(Patch)</strong>
           </div>
         </div>
       </aside>
     </section>
 
     <section class="workspace">
-      <article class="panel">
+      <article class="panel" title="현재 라이브로 송출 중인 발행 원본의 모습입니다.">
         <div class="panel-header">
           <div>
-            <h2>실제 영역</h2>
-            <p>현재 발행된 뉴스레터입니다. Patch를 누르면 Diff로 계산된 변경점만 이 DOM에 반영됩니다.</p>
+            <h2 title="고객이 보게 될 최종 아웃풋">라이브 발행 영역 (Actual DOM)</h2>
+            <p title="설명: 가상 DOM은 이 모델에 패치를 적용합니다.">현재 외부로 발행된 뉴스레터입니다. 에디터에서 수정한 후 '패치 발행' 버튼을 누르면 이 화면의 변한 요소만 갱신됩니다.</p>
           </div>
           <div class="panel-header__meta">
-            <span class="mini-badge">Published</span>
-            <span class="mini-badge" id="publishedStamp">Version 1</span>
+            <span class="mini-badge" title="최종본 (Published)">발행 완료됨</span>
+            <span class="mini-badge" id="publishedStamp" title="패치 버전 넘버입니다.">버전 번호 1</span>
           </div>
         </div>
-        <div class="mail-shell">
+        <div class="mail-shell" title="메일 수신함 디자인 컨테이너입니다.">
           <div class="mail-shell__bar">
             <div class="mail-shell__dots"><span></span><span></span><span></span></div>
-            <span>newsletter@patchletter.studio</span>
+            <span title="발신자 주소">newsletter@patchletter.studio</span>
           </div>
-          <div class="dom-area preview-frame real-dom" id="realRoot"></div>
+          <div class="dom-area preview-frame real-dom" id="realRoot" title="실제 브라우저 DOM 객체들로 이루어진 화면입니다. 요소들이 이곳으로 갱신됩니다."></div>
         </div>
       </article>
 
-      <article class="panel">
+      <article class="panel" title="이 영역에서 코드를 작성하고 테스트할 수 있습니다.">
         <div class="panel-header">
           <div>
-            <h2>테스트 영역</h2>
-            <p>편집 중인 뉴스레터 미리보기와 HTML 에디터입니다. 텍스트, 카드, 버튼, 섹션을 바꿔서 Patch를 시험해보세요.</p>
+            <h2 title="코드 수정이 가능한 에디터 공간">에디터 및 코드 실험 영역 (Test DOM)</h2>
+            <p title="설명: 코드를 수정하면 이 영역은 가짜(VNode 표면상)로 업데이트 됩니다.">편집 중인 뉴스레터의 미리보기 화면과 이면의 HTML 소스 코드입니다. 글이나 속성을 바꾸어 패치(Patch) 연산을 실험해보세요.</p>
           </div>
           <div class="panel-header__meta">
-            <span class="mini-badge">Editor</span>
-            <span class="mini-badge">Live Preview</span>
+            <span class="mini-badge" title="작업 중인 상태 (Draft)">임시 저장 에디터</span>
+            <span class="mini-badge" title="아래에 코드를 입력하면 즉시 반영됩니다.">실시간 렌더링</span>
           </div>
         </div>
-        <div class="mail-shell">
+        <div class="mail-shell" title="임시 저장소 파일 컨텍스트">
           <div class="mail-shell__bar">
             <div class="mail-shell__dots"><span></span><span></span><span></span></div>
-            <span>drafts / issue-editor.html</span>
+            <span title="파일 경로">drafts / issue-editor.html (임시저장)</span>
           </div>
-          <div class="dom-area test-dom" id="testRoot"></div>
+          <div class="dom-area test-dom" id="testRoot" title="가상 DOM이 그리는 테스트 공간 뷰어입니다. 실제 고객에게는 보이지 않습니다."></div>
         </div>
-        <div class="editor-tools">
-          <button class="tool-chip template" type="button" data-template="main">기본 템플릿</button>
-          <button class="tool-chip template" type="button" data-template="event">이벤트 템플릿</button>
-          <button class="tool-chip" type="button" data-snippet="story">스토리 카드 추가</button>
-          <button class="tool-chip" type="button" data-snippet="note">하이라이트 섹션 추가</button>
-          <button class="tool-chip" type="button" data-snippet="cta">CTA 추가</button>
-          <button class="tool-chip" type="button" data-snippet="footer">푸터 링크 추가</button>
+        <div class="editor-tools" title="코드 양식을 빠르게 주입하는 도구들입니다.">
+          <button class="tool-chip template" type="button" data-template="main" title="뉴스레터 기본 포맷 레이아웃을 로드합니다.">메인(기본) 스킨 적용</button>
+          <button class="tool-chip template" type="button" data-template="event" title="런칭 초대장 스타일 포맷으로 코드를 바꿉니다. (전체 교체 사례)">이벤트 초대장 스킨</button>
+          <button class="tool-chip" type="button" data-snippet="story" title="입력창에 카드 엘리먼트를 하나 추가시켜 삽입 연산(INSERT)을 구사합니다.">카드 컴포넌트 추가</button>
+          <button class="tool-chip" type="button" data-snippet="note" title="디자인 안내용 메모장을 추가합니다.">하이라이트 메모장 삽입</button>
+          <button class="tool-chip" type="button" data-snippet="cta" title="클릭 액션 유도를 위한 거대한 버튼 컨테이너를 추가합니다.">액션 유도 버튼(CTA) 삽입</button>
+          <button class="tool-chip" type="button" data-snippet="footer" title="꼬릿말 푸터에 링크 하나를 한 줄 추가합니다. (속성 변경 사례)">푸터에 연락처 링크 추가</button>
         </div>
         <div class="editor-stack">
           <div class="editor-label">
-            <span>HTML Source</span>
-            <span>편집 소스를 바꾸면 새 Virtual DOM 후보가 즉시 갱신됩니다.</span>
+            <span title="에디터 창입니다.">HTML 소스코드 에디터 (HTML Source Editor)</span>
+            <span title="도움말">코드를 타이핑하거나 툴 버튼을 누르면, 가상 트리(VDOM 후보군)가 즉시 갱신됩니다.</span>
           </div>
-          <textarea id="htmlEditor" spellcheck="false"></textarea>
+          <textarea id="htmlEditor" spellcheck="false" title="자유롭게 편집 가능한 원시 HTML 문자열 공간입니다. 이곳에서 코드의 구성을 맘대로 뜯어고쳐 테스트하세요."></textarea>
         </div>
       </article>
 
-      <aside class="panel">
+      <aside class="panel" title="연산 결과와 시스템 궤적을 확인하는 정보 패널입니다.">
         <div class="panel-header">
           <div>
-            <h2>운영 인사이트</h2>
-            <p>Patch 결과, Diff 타입, 현재 버전 히스토리, 발표용 요약을 모아둔 패널입니다.</p>
+            <h2 title="데이터 지표 안내서">운영 상황실 기록 (Insights Log)</h2>
+            <p title="설명서">엔진이 수행한 패치 결과, 케이스별 통계, 현재 시간의 히스토리 버전을 추적합니다.</p>
           </div>
         </div>
         <div class="insights-grid">
-          <div class="stat-card">
-            <span>History</span>
+          <div class="stat-card" title="저장된 상태들 중 현재 몇 개째 상태를 열람 중인지 알려줍니다.">
+            <span>열람 포인터 (History)</span>
             <strong id="historyIndex">1 / 1</strong>
             <small>현재 보고 있는 버전 위치</small>
           </div>
-          <div class="stat-card">
-            <span>Patch Count</span>
-            <strong id="patchCount">0</strong>
-            <small>직전 발행에서 적용된 패치 수</small>
+          <div class="stat-card" title="가장 최근 시행된 패치 연산을 통해 브라우저에서 몇 개의 요소가 고쳐졌는지 보여줍니다.">
+            <span>최근 패치량 (Patch Count)</span>
+            <strong id="patchCount">0개</strong>
+            <small>직전 발행에서 변경된 요소 수</small>
           </div>
-          <div class="stat-card">
-            <span>Node Count</span>
-            <strong id="nodeCount">0</strong>
-            <small>현재 발행본 Virtual DOM 노드 수</small>
+          <div class="stat-card" title="전체 트리의 규모를 알려줍니다.">
+            <span>구조 크기 (Node Count)</span>
+            <strong id="nodeCount">0 객체</strong>
+            <small>현재 발행본 가상 DOM 내 노드 수</small>
           </div>
-          <div class="stat-card">
-            <span>Last Publish</span>
+          <div class="stat-card" title="가장 마지막으로 패치 버튼을 누른 시각입니다.">
+            <span>최종 업데이트 시각 (Last Publish)</span>
             <strong id="publishTime">--:--</strong>
-            <small>마지막 Patch 발행 시각</small>
+            <small>마지막으로 화면을 성공적으로 덮어쓴 시각</small>
           </div>
         </div>
-        <div class="log-box">
-          <h3>Diff 5 Cases</h3>
-          <p class="panel-note">INSERT, REMOVE, REPLACE, PROPS, TEXT 케이스를 각각 집계합니다.</p>
-          <div class="patch-summary" id="patchSummary"></div>
+        <div class="log-box" title="가상 DOM 비교(Diff) 알고리즘이 발견해낸 케이스의 종류들입니다.">
+          <h3 title="5가지 유형의 변경 케이스 분석 리포트">5가지 비교 케이스 (Diff 5 Cases) 집계</h3>
+          <p class="panel-note" title="삽입, 삭제, 노드 자체 교체, 프로퍼티(속성) 수정, 일반 텍스트 수정을 모두 수치화하여 모아 보여줍니다.">새 노드 생성(INSERT), 삭제(REMOVE), 종류 교체(REPLACE), 속성수정(PROPS), 텍스트수정(TEXT) 분류를 각각 집계합니다.</p>
+          <div class="patch-summary" id="patchSummary" title="이곳에 알약 형태로 요약된 패치 개수가 표시됩니다."></div>
         </div>
-        <div class="log-box">
-          <h3>Patch Log</h3>
-          <ol class="patch-log" id="patchLog"></ol>
+        <div class="log-box" title="구체적인 알고리즘 명령 지시 로그서입니다.">
+          <h3 title="세부 변경 사항 기록 열람">구체적 패치 수행 로그 (Patch Log)</h3>
+          <ol class="patch-log" id="patchLog" title="이곳에 정확히 DOM 트리의 어느 경로(Path)에서 무슨 속성이 고쳐졌는지 배열되어 나타납니다."></ol>
         </div>
-        <div class="history-box">
-          <h3>Version History</h3>
-          <p class="history-caption">Patch가 끝날 때마다 새 Virtual DOM을 저장합니다. 아무 버전이나 눌러 복원할 수도 있습니다.</p>
-          <ul class="history-list" id="historyRail"></ul>
+        <div class="history-box" title="실패 대비용 롤백(Rollback) 데이터를 저장하는 리스트 뷰입니다.">
+          <h3 title="버전 관리 시스템 (Git 혹은 SVN 처럼 동작)">과거 이력 관리 시스템 (Version History)</h3>
+          <p class="history-caption" title="해당 시스템의 작동 설명입니다.">가상 DOM 패치 작업이 완료될 때마다 그 순간의 완전한 구조물(스냅샷)을 별도 저장소에 격리 보관합니다. 리스트 중 아무 시간대나 누르면 즉시 전체 시스템이 해당 버전으로 복구됩니다.</p>
+          <ul class="history-list" id="historyRail" title="과거의 기록물 버튼들이 쌓이는 장소입니다."></ul>
         </div>
-        <div class="helper-box">
-          <h3>발표용 핵심 설명</h3>
+        <div class="helper-box" title="데모 시연자를 위한 프레젠테이션(발표) 핵심 가이드입니다.">
+          <h3 title="면접관이나 청중에게 설명하기 위한 주요 골자입니다.">포트폴리오 면접용 핵심 설명 (Core Principles)</h3>
           <ul class="summary-list">
-            <li>실제 발행본 DOM을 읽어서 Virtual DOM 트리로 변환합니다.</li>
-            <li>편집 중인 HTML을 다시 읽어 새로운 Virtual DOM을 생성합니다.</li>
-            <li>Diff 알고리즘이 이전 트리와 새 트리를 비교해 최소 변경만 계산합니다.</li>
-            <li>Patch 단계에서 그 변경만 실제 DOM에 반영하고, 결과 상태를 History에 저장합니다.</li>
-            <li>Undo / Redo를 누르면 특정 Virtual DOM 상태로 이동하고 실제/테스트 영역도 함께 동기화됩니다.</li>
+            <li title="최우선 동작 원리">1. 이미 브라우저상에 무겁게 그려져(렌더링 된) 있는 발행본 DOM을 읽어들여서 가볍고 조작이 쉬운 추상화된 가상 DOM 구조체 객체(Tree)로 변환(Parsing)합니다.</li>
+            <li title="코드 갱신 원리">2. 사용자가 수정하고 있는 에디터 코드를 문자열 채로 읽어들여서 '비교 대상이 될 새로운 가상 돔(VNode)' 후보군을 찍어냅니다.</li>
+            <li title="알고리즘 연산">3. 최신의 차이점 발견(Diff) 알고리즘이 과거의 VNode 트리와 방금 만든 VNode 트리를 재귀적으로 순회 비교하며, 5가지 원칙 하에 오직 최소 한도의 '변경 사항 내역서' 만 뽑아냅니다.</li>
+            <li title="결과 반영">4. 패치(Patch) 연산 단계에서 브라우저 전체를 새로고침 하지 않고, 오로지 이 '명령 지시서'를 보고 실제 화면에 있는 각 요소 하나하나를 찾아가 그 부위만 살짝 덮어씌웁니다. 그러고 난 결과물은 상태 저장소 (History)에 복사본으로 안전히 봉인됩니다.</li>
+            <li title="타임머신 원리">5. 과거 저장 정보(Undo) 복원 버튼을 호출하면 보존해둔 가상 스냅샷 개체를 꺼내어 이 과정을 다시 한 번 수행, 결국 즉각적인 롤백이 가능해집니다.</li>
           </ul>
         </div>
       </aside>
     </section>
 
-    <section class="inspectors">
+    <section class="inspectors" title="가상 DOM 객체의 실체를 들여다보는 분석기 창입니다.">
       <article class="panel">
         <div class="inspect-box">
           <details open>
-            <summary>현재 Virtual DOM</summary>
-            <pre id="currentVdomView"></pre>
+            <summary title="현재 브라우저에 투영되어 있는 기준점 모델입니다.">초기(현재) 가상 DOM 스냅샷</summary>
+            <pre id="currentVdomView" title="메모리 구조 코드 덤프입니다."></pre>
             <div class="tree-box">
-              <h3>트리 시각화</h3>
-              <div class="vdom-tree" id="currentVdomTree"></div>
+              <h3 title="현재 화면을 그리고 있는 트리입니다.">트리 구조 모델 시각화 뷰어</h3>
+              <div class="vdom-tree" id="currentVdomTree" title="계층 구조 형태로 그려진 DOM 모델입니다."></div>
             </div>
           </details>
         </div>
@@ -1246,27 +1246,28 @@
       <article class="panel">
         <div class="inspect-box">
           <details open>
-            <summary>다음 Virtual DOM</summary>
-            <pre id="nextVdomView"></pre>
+            <summary title="에디터에서 코드를 고칠 경우 실시간으로 생성되는 비교 모델입니다.">수정된(다음) 새로운 가상 DOM 모델</summary>
+            <pre id="nextVdomView" title="변경점이 반영된 메모리 구조 코드 덤프입니다."></pre>
             <div class="tree-box">
-              <h3>트리 시각화</h3>
-              <div class="vdom-tree" id="nextVdomTree"></div>
+              <h3 title="수정 후의 미래 트리입니다.">트리 구조 모델 시각화 뷰어</h3>
+              <div class="vdom-tree" id="nextVdomTree" title="계층 구조 형태로 그려진 미래 DOM 모델입니다."></div>
             </div>
           </details>
         </div>
       </article>
       <article class="panel">
-        <div class="inspect-box">
-          <h2>왜 Virtual DOM을 쓰나?</h2>
-          <p class="panel-copy">
-            실제 DOM을 계속 직접 수정하면 브라우저는 레이아웃 계산과 다시 그리기를 반복할 수 있습니다.
-            이 데모는 먼저 메모리 안의 Virtual DOM에서 비교와 계산을 끝낸 뒤, 실제 DOM에는 필요한 최소 변경만 적용하는 방식을 보여줍니다.
+        <div class="inspect-box" title="가상 모델 도입의 당위성">
+          <h2 title="성능 최적화의 기술적 이유입니다.">왜 굳이 가상(Virtual) DOM 방식을 고집해야 할까요?</h2>
+          <p class="panel-copy" title="결과적으로 성능 부하를 극도로 줄이기 위해서입니다.">
+            실제 브라우저 화면의 요소를 계속해서 직접 추가/삭제/수정하면 브라우저는 매번 전체 레이아웃 크기를 다시 계산하고 화면 전체를 리페인트(다시 색칠하기)하는 악순환을 반복합니다.
+            이 시뮬레이터 랩은 화면에 보이지 않는 메모리 안의 '가상 추상객체(VDOM)' 위에서 빠르고 가볍게 비교 분석 연산을 전부 끝마친 뒤, 
+            출력장치인 실제 DOM에는 오로지 꼭 필요한 최소한의 부위만 골라 업데이트(Patch)하는 정통 프론트엔드 최적화 과정을 재현합니다.
           </p>
-          <div class="mini-list">
-            <span class="chip"><strong>dom</strong> 트리 구조 객체</span>
-            <span class="chip"><strong>diff</strong> 차이점 계산</span>
-            <span class="chip"><strong>patch</strong> 변경점 적용</span>
-            <span class="chip"><strong>history</strong> 상태 복원</span>
+          <div class="mini-list" title="작동 키워드">
+            <span class="chip" title="가상 돔"><strong>1. 초벌 객체화 (VDOM)</strong> 트리 구조 객체 메모리 탑재</span>
+            <span class="chip" title="디프 알고리즘"><strong>2. 연산 도출 (Diff)</strong> 두 트리의 차별점 계산</span>
+            <span class="chip" title="패치 작업"><strong>3. 점진적 갱신 (Patch)</strong> 바뀐 요소만 외과수술식 적용</span>
+            <span class="chip" title="히스토리 기록"><strong>4. 아카이빙 (History)</strong> 이전 스냅샷 상태 보존 및 복원</span>
           </div>
         </div>
       </article>
@@ -1275,31 +1276,32 @@
     <template id="sampleTemplate">
       <article class="newsletter" data-issue="24">
         <div class="newsletter-topline">
-          <span>Patchletter / Product Dispatch</span>
-          <span>Issue 24 • Wednesday</span>
+          <span>패치레터 스튜디오 / 제품 업데이트 소식지 (Product Dispatch)</span>
+          <span>제 24호 발행본 • 정기구독 수요일</span>
         </div>
         <div class="newsletter-main">
           <section class="newsletter-hero">
             <div class="hero-copy-card">
-              <p class="newsletter-kicker">Ship smarter with diff</p>
-              <h1 class="newsletter-title">Only patch what changed, and keep the rest of the page calm.</h1>
+              <p class="newsletter-kicker">더 똑똑하게 비교하고 출시하기 (Ship smarter with diff)</p>
+              <h1 class="newsletter-title">오직 변한 곳만 수술하듯 고치고, 안정적인 화면을 유지하세요.</h1>
               <p class="newsletter-lead">
-                이번 호는 뉴스레터 에디터를 주제로, 발행본 DOM을 Virtual DOM으로 바꾸고 편집본과 비교해
-                변경된 부분만 실제 DOM에 반영하는 흐름을 보여줍니다. 실무형 UI처럼 보이지만 핵심은 알고리즘 검증입니다.
+                이번 호에서는 '가상 DOM 에디터'를 주제로, 발행된 화면을 데이터 객체로 역변환하고 
+                에디터 구조물과의 차이점만 찾아내 실제 화면에 전송(Patch)하는 거대한 작업 흐름을 소개합니다. 
+                겉모습은 실무용 프로덕트처럼 생겼지만 그 안의 핵심 원리는 거대한 트리 알고리즘 실험장입니다.
               </p>
               <div class="newsletter-actions">
-                <a class="newsletter-button" href="#issue">이번 호 보기</a>
-                <a class="newsletter-button--ghost" href="#archive">지난 호 둘러보기</a>
+                <a class="newsletter-button" href="#issue" title="기본 프로퍼티 테스트 속성입니다.">이번 호 자세히 보기 (클릭 속성)</a>
+                <a class="newsletter-button--ghost" href="#archive" title="다양한 속성을 추가해보세요.">지난 소식지 모음집</a>
               </div>
             </div>
             <div class="newsletter-visual">
               <div class="visual-orbit">
-                <span class="visual-pill">Realtime Issue Dashboard</span>
+                <span class="visual-pill">도입 기관 실시간 운영 지표 대시보드</span>
               </div>
               <div class="visual-board">
                 <div class="visual-row">
                   <div class="visual-card">
-                    <strong>Patch Summary</strong>
+                    <strong>엔진 구동 리포트 (Patch Summary)</strong>
                     <div class="visual-bars">
                       <span></span>
                       <span></span>
@@ -1308,72 +1310,72 @@
                     </div>
                   </div>
                   <div class="visual-chart">
-                    <strong>Open Rate</strong>
-                    <p>41.2%</p>
+                    <strong>성능 상향 오픈율 (Open Rate)</strong>
+                    <p>41.2% 향상</p>
                   </div>
                 </div>
                 <div class="visual-card">
-                  <strong>Editor Note</strong>
-                  <p>텍스트, 버튼, 카드, 속성, footer 링크까지 바꿔가며 Diff 로그를 테스트해보세요.</p>
+                  <strong>수석 엔지니어 메모 (Editor Note)</strong>
+                  <p>텍스트 노드, 버튼 엘리먼트, 레이아웃 카드, ID 속성, 하단부 링크까지 여러 태그를 자유롭게 조작하고 삭제하며 Diff 로그서가 잘 생성되는지 테스트해보세요.</p>
                 </div>
               </div>
             </div>
           </section>
 
           <ul class="newsletter-meta">
-            <li>DOM -> VDOM</li>
-            <li>Diff 5 Cases</li>
-            <li>Patch Publish</li>
-            <li>Undo / Redo</li>
-            <li>Vanilla JavaScript</li>
+            <li>돔 구조 변환 (DOM -> VDOM)</li>
+            <li>5대 차별 케이스 구분 (Diff 5 Cases)</li>
+            <li>라이브 전송 시스템 (Patch Publish)</li>
+            <li>과거 상태 백업 복원 (Undo / Redo)</li>
+            <li>100% 순수 자바스크립트 엔진 (Vanilla JS)</li>
           </ul>
 
           <section class="newsletter-grid">
             <article class="story-card">
-              <strong>Main Story</strong>
-              <h3>왜 실제 DOM을 전부 다시 그리지 않을까?</h3>
-              <p>브라우저의 실제 DOM은 화면과 연결되어 있어 변경 비용이 큽니다. 그래서 먼저 Virtual DOM에서 차이점을 계산합니다.</p>
+              <strong>핵심 주제 1 (Main Story)</strong>
+              <h3>우리는 왜 매번 전체 화면을 다시 그리면 안 될까요?</h3>
+              <p>브라우저가 그리는 물리적인 레이아웃 DOM 구조는 컴퓨터 그래픽 장치와 연결되어 있어 변경 비용이 지대하게 큽니다. 리액트와 같은 엔진들은 이 비용 부채를 상환하고자 필연적으로 메모리에서 먼저 차이점(가상 돔)을 계산합니다.</p>
             </article>
             <article class="story-card">
-              <strong>Workflow</strong>
-              <h3>이전 트리와 새 트리를 비교하는 Diff</h3>
-              <p>루트부터 자식 노드까지 재귀적으로 내려가며 INSERT, REMOVE, REPLACE, PROPS, TEXT를 구분합니다.</p>
+              <strong>과정 설명 2 (Workflow)</strong>
+              <h3>어제와 오늘의 트리 구조체를 비교하는 재귀적 연산 (Diff)</h3>
+              <p>최상위 부모 루트부터 말단 자식 노드까지 반복 재귀(Recursive)하며 내려가, 생성(INSERT), 파괴(REMOVE), 교체(REPLACE), 속성변화(PROPS), 글씨변화(TEXT) 타입을 판별합니다.</p>
             </article>
             <article class="story-card">
-              <strong>Outcome</strong>
-              <h3>Patch는 필요한 부분만 실제 DOM에 반영</h3>
-              <p>계산이 끝나면 실제 발행본 뉴스레터에는 변경된 부분만 반영하고, 결과 상태는 History에 저장합니다.</p>
+              <strong>최종 결론 3 (Outcome)</strong>
+              <h3>발현된 단 하나의 요소(Patch)만 진짜 화면에 수놓기</h3>
+              <p>길고 긴 연산 지점이 끝나면 브라우저의 진짜 뉴스레터 지면에는 한두 개의 요소 부위만 점진적으로 반영됩니다. 이 마법같은 알고리즘과 순간적인 상태값은 타임머신 객체(History)에 안전히 보관됩니다.</p>
             </article>
           </section>
 
           <section class="newsletter-section newsletter-section--wide">
             <div class="wide-grid">
               <div>
-                <h3>Editor Memo</h3>
-                <p>이 프로젝트는 React의 핵심 개념인 Virtual DOM, Diff, Patch, State History를 직접 구현해보는 과제입니다.</p>
+                <h3>오퍼레이팅 가이드 라인 (Editor Memo)</h3>
+                <p>이 대시보드 프로젝트는 현재 글로벌 표준 웹 생태계(React, Vue 등)를 지탱하는 가장 거대하고 추상화된 핵심 컨셉인 가상 DOM 렌더링을 완전히 바닥부터 직접 통제 및 구현해보는 극한 과제입니다.</p>
               </div>
               <ul class="note-list">
-                <li>제목이나 본문만 바꾸면 TEXT 패치가 발생합니다.</li>
-                <li><code>href</code>, <code>class</code>, <code>data-*</code> 를 바꾸면 PROPS 패치가 발생합니다.</li>
-                <li>카드 섹션을 추가하거나 제거하면 INSERT, REMOVE 케이스를 확인할 수 있습니다.</li>
+                <li>h1, p 태그 안의 텍스트 본문이나 제목을 바꾸시면 가장 가벼운 단계인 `TEXT 패치 로그`가 기재됨을 볼 수 있습니다.</li>
+                <li>오른쪽 코드의 <code>href</code>, <code>class="newsletter-visual"</code> 등의 프로퍼티(속성)을 지우거나 바꾸면 `PROPS 패치 로그`가 발동합니다.</li>
+                <li>카드 레이아웃 섹션을 아예 지워버리거나 추가하면 가장 거대한 `REMOVE`, `INSERT 패치 케이스`를 목격할 수 있습니다.</li>
               </ul>
             </div>
           </section>
 
           <section class="newsletter-section">
             <article class="insight-card">
-              <strong>Team Note</strong>
-              <h3>발표 포인트</h3>
-              <p>발행본 DOM을 읽어서 Virtual DOM으로 바꾸고, 편집 중 HTML을 다시 읽어 새 트리를 만든 뒤, Diff 결과만 Patch한다는 흐름을 데모로 보여주면 됩니다.</p>
+              <strong>기술 면접 대비 (Team Note)</strong>
+              <h3>발표 및 포트폴리오 핵심 하이라이트 지점</h3>
+              <p>기존 발행된 렌더링 화면체(DOM)를 읽어 역방향으로 트리화(VDOM) 하고, 좌측 코드 에디터의 코드를 읽어 미래지향적인 새 트리(VDOM) 후보를 연산한 뒤, 알고리즘 결과(Diff) 패치 구문만을 적용(Patch)시키는 메커니즘을 시연하는 것에 주안점을 두십시오.</p>
             </article>
           </section>
 
           <footer class="newsletter-footer">
-            <span>Crafted for Wednesday Coding Day • Seoul</span>
-            <div class="footer-links">
-              <a href="#github">GitHub</a>
-              <a href="#archive">Archive</a>
-              <a href="#unsubscribe">Unsubscribe</a>
+            <span>서울 수요일 코딩 스터디 프로젝트 (Crafted for Wednesday Coding Day • Seoul)</span>
+            <div class="footer-links" title="PROPS 변경 및 INSERT 시연 연습하기 좋은 공간입니다">
+              <a href="#github">깃허브 저장소</a>
+              <a href="#archive">웹 기술문서 기록</a>
+              <a href="#unsubscribe">구독 탈퇴하기</a>
             </div>
           </footer>
         </div>
@@ -1383,76 +1385,77 @@
     <template id="eventTemplate">
       <article class="newsletter" data-issue="25">
         <div class="newsletter-topline">
-          <span>Patchletter / Event Edition</span>
-          <span>Live Session • Thursday</span>
+          <span>패치레터 특별초청 에디션 (Event Edition)</span>
+          <span>오프라인 네트워킹 세션 • 목요일 스페셜</span>
         </div>
         <div class="newsletter-main">
           <section class="newsletter-hero">
             <div class="hero-copy-card">
-              <p class="newsletter-kicker">Special invitation</p>
-              <h1 class="newsletter-title">A launch invite shaped like a product memo.</h1>
+              <p class="newsletter-kicker">특별 VIP 공식 초청장 (Special invitation)</p>
+              <h1 class="newsletter-title">기존 양식을 뿌리째 바꾼 커스텀 템플릿(통째 교체 시뮬레이터).</h1>
               <p class="newsletter-lead">
-                이벤트 전용 템플릿입니다. 같은 알고리즘 위에서 다른 콘텐츠 구조가 어떻게 Virtual DOM으로 표현되는지 비교하기 좋습니다.
+                방금 "이벤트 초대장 스킨" 버튼을 클릭하심으로서 화면 전체 DOM 노드 트리가 붕괴되고 재구축되었습니다. 완전 다른 형태의 오프라인 론칭 초대장 구조가 들어설 때
+                Virtual DOM이 얼마나 무수히 많은 REPLACE 패치를 쏟아내는지 로그 창에서 확인하셨습니까?
               </p>
               <div class="newsletter-actions">
-                <a class="newsletter-button" href="#reserve">좌석 예약하기</a>
-                <a class="newsletter-button--ghost" href="#agenda">아젠다 확인</a>
+                <a class="newsletter-button" href="#reserve" title="현장 등록 버튼">현장 좌석 확정하기</a>
+                <a class="newsletter-button--ghost" href="#agenda" title="시간표 링크">타임테이블(아젠다) 확인</a>
               </div>
             </div>
             <div class="newsletter-visual">
               <div class="visual-orbit">
-                <span class="visual-pill">Launch Night Preview</span>
+                <span class="visual-pill">론칭 나이트쇼 프리뷰 (Launch Night Preview)</span>
               </div>
               <div class="visual-board">
                 <div class="visual-card">
-                  <strong>Program</strong>
-                  <p>Product demo, engineering Q&amp;A, live patch showcase</p>
+                  <strong>세부 프로그램 (Program)</strong>
+                  <p>엔지니어링 코딩 챌린지 데모, 시니어 개발자 Q&amp;A, 가상 VDOM 패치 라이브 쇼</p>
                 </div>
                 <div class="visual-row">
                   <div class="visual-card">
-                    <strong>Seats</strong>
-                    <p>128 confirmed</p>
+                    <strong>남은 좌석 (Seats)</strong>
+                    <p>현재 128 명 등록 완료 배정판</p>
                   </div>
                   <div class="visual-chart">
-                    <strong>ETA</strong>
-                    <p>19:30</p>
+                    <strong>시작 시간 (ETA)</strong>
+                    <p>오후 19:30</p>
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-          <ul class="newsletter-meta">
-            <li>Event Landing</li>
-            <li>Button Prop Test</li>
-            <li>Card Insert Test</li>
-            <li>Footer Link Test</li>
+          <ul class="newsletter-meta" title="해당 템플릿의 주 목적입니다.">
+            <li>거대 템플릿 파일 치환(Event Landing)</li>
+            <li>속성 교체 버튼 테스트 (Button Prop)</li>
+            <li>카드 컴포넌트 삽입 궤도 테스트 (Card Insert)</li>
+            <li>푸터 꼬리말 목록 연동 모의 비행 (Footer Link Test)</li>
           </ul>
 
           <section class="newsletter-grid">
             <article class="story-card">
-              <strong>Venue</strong>
-              <h3>Seoul Forest Conference Hall</h3>
-              <p>현장 체크인, 네트워킹 라운지, 데모 부스를 하나의 템플릿 안에 담아 편집본과 발행본 차이를 비교해볼 수 있습니다.</p>
+              <strong>개최 장소 안내 (Venue)</strong>
+              <h3>서울숲 복합 컨퍼런스 홀 지하 1층</h3>
+              <p>현장 체크인 정보, 백엔드 네트워킹 라운지, 프론트엔드 코드 데모 부스를 하나의 초대장 템플릿 안에 담아 에디터와 발행본의 차이를 대폭 비교해볼 수 있습니다.</p>
             </article>
             <article class="story-card">
-              <strong>Agenda</strong>
-              <h3>What we will show</h3>
-              <p>Diff 케이스, Patch 과정, State History와 Undo / Redo 복구 흐름까지 실제 UI에서 시연합니다.</p>
+              <strong>발표 주제 (Agenda)</strong>
+              <h3>우리가 시연할 놀라운 포트폴리오 (What we show)</h3>
+              <p>5종류의 극단적 Diff 분기 케이스 판별 로직, 성능을 이끌어내는 Patch 교체 과정, 스냅샷 히스토리 체인, 롤백과 전진(Undo / Redo) 흐름을 통합 시연합니다.</p>
             </article>
             <article class="story-card">
-              <strong>Reminder</strong>
-              <h3>Bring your best edge cases</h3>
-              <p>노드 추가, 속성 수정, 문장 교체, 카드 삭제를 모두 넣어보면 더 설득력 있는 데모가 됩니다.</p>
+              <strong>주의사항 메모 (Reminder)</strong>
+              <h3>수많은 극한의 엣지(Edge) 케이스를 가져와주세요.</h3>
+              <p>악의적인 노드 무한 추가, 속성 삭제 공격, 대규모 문장 치환, 불규칙적인 카드 삭제를 모두 이 템플릿에 부어보면 이 앱이 얼마나 견고한 엔진을 가졌는지 설득력이 올라갑니다.</p>
             </article>
           </section>
 
           <footer class="newsletter-footer">
-            <span>Hosted by Patchletter Studio</span>
-            <div class="footer-links">
-              <a href="#reserve">Reserve</a>
-              <a href="#faq">FAQ</a>
-              <a href="#share">Share</a>
+            <span>패치레터 엔진 개발진 개최 (Hosted by Patchletter Engine Base)</span>
+            <div class="footer-links" title="PROPS 변경 및 INSERT 시연 연습하기 좋은 공간입니다">
+              <a href="#reserve">좌석 등록증 발급</a>
+              <a href="#faq">자주 묻는 질문(FAQ)</a>
+              <a href="#share">발표 영상 및 자료 공유받기</a>
             </div>
           </footer>
         </div>
@@ -1484,31 +1487,31 @@
     const snippetLibrary = {
       story: `
         <article class="story-card">
-          <strong>New Story</strong>
-          <h3>이 카드도 Diff 테스트에 사용됩니다.</h3>
-          <p>Patch를 눌러 INSERT 케이스가 실제 발행본 DOM에 어떻게 반영되는지 확인해보세요.</p>
+          <strong>추가된 새 스토리 (New Story)</strong>
+          <h3>이 카드도 알고리즘(Diff) 삽입 연산 테스트에 쓰입니다.</h3>
+          <p>임의로 코드가 길어졌을 때 패치 발행 버튼을 누르면 이 구간이 INSERT 연산 케이스로 분류되어 실제 화면 지면에만 덧붙여집니다.</p>
         </article>`,
       note: `
         <section class="newsletter-section">
           <article class="insight-card">
-            <strong>Highlight</strong>
-            <h3>새 하이라이트 섹션</h3>
-            <p>편집본 HTML에 섹션이 추가되면 새 Virtual DOM에서 INSERT 패치가 발생합니다.</p>
+            <strong>강조 안내문 (Highlight Note)</strong>
+            <h3>테스트용 새 하이라이트 공지 섹션입니다.</h3>
+            <p>편집본 에디터 문자열에 이 코드가 삽입되면 엔진은 전역을 스캔하다가 이 구간을 INSERT(개체 생성) 패치 대상으로 분리해냅니다.</p>
           </article>
         </section>`,
       cta: `
         <section class="newsletter-section">
           <article class="sponsor-card">
-            <strong>CTA</strong>
-            <h3>Readers can act right here</h3>
-            <p>버튼 링크나 문구를 바꾸면 PROPS, TEXT 케이스를 확인할 수 있습니다.</p>
+            <strong>사용자 행동 유도 (CTA Banner)</strong>
+            <h3>구독자들이 즉시 누르고 싶게 만드는 핵심 버튼(Call To Action) 영역입니다.</h3>
+            <p>아래 버튼의 클래스나 href 링크 주소를 고의로 바꾸고 패치를 수행해 보세요. PROPS(속성 수정) 케이스가 어떻게 일어나는지 구경할 차례입니다.</p>
             <div class="newsletter-actions">
-              <a class="newsletter-button" href="#new-action">새 액션 시작</a>
+              <a class="newsletter-button" href="#new-action-trigger">거대한 혜택 받으러 가기 (New Action)</a>
             </div>
           </article>
         </section>`,
       footer: `
-            <a href="#team">Team</a>`
+            <a href="#team">팀 개발 스쿼드 소개 링크</a>`
     };
 
     let history = [];
