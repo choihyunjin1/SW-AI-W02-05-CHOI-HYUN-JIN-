@@ -675,7 +675,42 @@ textarea {
   font-size: 0.84rem;
 }
 
+.runtime-list-wrapper {
+  display: grid;
+  gap: 12px;
+}
+
+.runtime-list-container {
+  position: relative;
+}
+
+.runtime-list-wrapper.is-collapsed .runtime-list-container {
+  max-height: 520px;
+  overflow: hidden;
+}
+
+.runtime-list-fade {
+  display: none;
+}
+
+.runtime-list-wrapper.is-collapsed .runtime-list-fade {
+  display: block;
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 150px;
+  background: linear-gradient(to bottom, transparent, var(--bg) 95%);
+  pointer-events: none;
+}
+
+.runtime-list-toggle {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0;
+}
+
 .runtime-list {
+  display: grid;
+  gap: 10px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 

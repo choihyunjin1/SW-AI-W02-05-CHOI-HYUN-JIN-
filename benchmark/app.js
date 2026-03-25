@@ -170,7 +170,9 @@ const MANUAL_SAMPLE_TEMPLATE = `
 /* -------------------------------------------------------------------------- */
 
 const state = {
-  ui: {},
+  ui: {
+    listExpanded: false
+  },
   manual: {
     realVNode: null,
     testVNode: null,
@@ -216,6 +218,30 @@ const state = {
   graph: {
     frame: null,
     dirty: false
+  }
+};
+
+window.toggleRuntimeList = function() {
+  state.ui.listExpanded = !state.ui.listExpanded;
+  
+  const directWrappers = document.querySelectorAll("#benchmarkDirectRoot .runtime-list-wrapper");
+  const directBtns = document.querySelectorAll("#benchmarkDirectRoot .runtime-list-toggle button");
+  
+  directWrappers.forEach(w => {
+    w.className = `runtime-list-wrapper ${state.ui.listExpanded ? '' : 'is-collapsed'}`;
+  });
+  
+  directBtns.forEach(b => {
+    b.textContent = state.ui.listExpanded ? '접기 (가리기)' : '모든 노드 보기 (펼치기)';
+  });
+
+  if (!state.benchmark.running && state.benchmark.burstRemaining === 0) {
+    if (state.benchmark.vdomVNode) {
+      const nextVNode = renderBenchmarkVNode(state.benchmark.model);
+      const patches = diff(state.benchmark.vdomVNode, nextVNode, "0", []);
+      applyPatches(state.ui.benchmarkVdomRoot, patches, nextVNode);
+      state.benchmark.vdomVNode = nextVNode;
+    }
   }
 };
 
@@ -1282,7 +1308,17 @@ function renderBenchmarkHTML(model) {
           <div class="runtime-kpi"><span>phase</span><strong>${escapeHTML(model.phase)}</strong></div>
         </div>
         <div class="runtime-alerts">${alertHTML}</div>
-        <div class="runtime-list">${listHTML}</div>
+        <div class="runtime-list-wrapper ${state.ui.listExpanded ? '' : 'is-collapsed'}">
+          <div class="runtime-list-container">
+            <div class="runtime-list">${listHTML}</div>
+            <div class="runtime-list-fade"></div>
+          </div>
+          <div class="runtime-list-toggle">
+            <button class="button button--primary button--small" onclick="window.toggleRuntimeList()">
+              ${state.ui.listExpanded ? '접기 (가리기)' : '모든 노드 보기 (펼치기)'}
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   `;
@@ -1347,7 +1383,18 @@ function renderBenchmarkVNode(model) {
           ])
         ]),
         createElementVNode("div", { class: "runtime-alerts" }, alertNodes),
-        createElementVNode("div", { class: "runtime-list" }, listNodes)
+        createElementVNode("div", { class: `runtime-list-wrapper ${state.ui.listExpanded ? "" : "is-collapsed"}` }, [
+          createElementVNode("div", { class: "runtime-list-container" }, [
+            createElementVNode("div", { class: "runtime-list" }, listNodes),
+            createElementVNode("div", { class: "runtime-list-fade" }, [])
+          ]),
+          createElementVNode("div", { class: "runtime-list-toggle" }, [
+            createElementVNode("button", {
+              class: "button button--primary button--small",
+              onclick: "window.toggleRuntimeList()"
+            }, [state.ui.listExpanded ? "접기 (가리기)" : "모든 노드 보기 (펼치기)"])
+          ])
+        ])
       ])
     ])
   );
