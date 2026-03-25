@@ -25,7 +25,7 @@ const PATCH_TYPES = {
 
 const GRAPH_POINT_LIMIT = 90;
 const BENCHMARK_BURST_TICKS = 30;
-const BENCHMARK_MAX_CONTINUOUS_MS = 15000;
+const BENCHMARK_MAX_CONTINUOUS_MS = 20000;
 const BENCHMARK_MIN_DELAY_MS = 34;
 const BENCHMARK_TARGET_UTILIZATION = 0.55;
 const BENCHMARK_UI_REFRESH_MS = 90;
@@ -1751,12 +1751,37 @@ function renderTreeNode(vNode) {
 function renderTreePanel() {
   const panel = state.ui.treePanel;
   panel.innerHTML = "";
-  traverseDFS(state.manual.realVNode).forEach((entry) => {
+  const entries = traverseDFS(state.manual.realVNode);
+  const MAX_VISIBLE = 20;
+
+  entries.forEach((entry, index) => {
+    if (index >= MAX_VISIBLE && !state.ui.treePanelExpanded) return;
     const node = findVNodeByPath(state.manual.realVNode, entry.path);
     if (node) {
       panel.appendChild(renderTreeNode(node));
     }
   });
+
+  if (entries.length > MAX_VISIBLE) {
+    const btn = document.createElement("button");
+    btn.className = "button button--ghost";
+    btn.style.width = "100%";
+    btn.style.marginTop = "8px";
+    if (state.ui.treePanelExpanded) {
+      btn.textContent = "접기 (Show Less)";
+      btn.onclick = () => {
+        state.ui.treePanelExpanded = false;
+        renderTreePanel();
+      };
+    } else {
+      btn.textContent = `전체 보기 (${entries.length - MAX_VISIBLE}개 더보기)`;
+      btn.onclick = () => {
+        state.ui.treePanelExpanded = true;
+        renderTreePanel();
+      };
+    }
+    panel.appendChild(btn);
+  }
 }
 
 function renderTraversal(panel, sequence) {
