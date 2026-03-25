@@ -2181,6 +2181,27 @@ function init() {
   resetManualLab();
   window.__VDOM_CONSOLE__ = state;
   scheduleGraphDraw();
+
+  // Premium Customization: Micro-interaction pulse on data update
+  try {
+    const metricObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        let target = mutation.target.nodeType === 3 ? mutation.target.parentElement : mutation.target;
+        if (target && target.classList) {
+          target.classList.remove("pulse-update");
+          void target.offsetWidth; // Force CSS reflow
+          target.classList.add("pulse-update");
+        }
+      });
+    });
+
+    const metricCards = document.querySelectorAll(".metric-card strong, .runtime-meta__item strong, #patchSummary");
+    metricCards.forEach(card => {
+      metricObserver.observe(card, { characterData: true, childList: true, subtree: true });
+    });
+  } catch (err) {
+    console.error("Micro-interaction init failed:", err);
+  }
 }
 
 window.addEventListener("DOMContentLoaded", init);

@@ -1,25 +1,25 @@
 :root {
-  --bg: #050816;
-  --bg-2: #0a1023;
-  --card: rgba(11, 18, 36, 0.88);
-  --card-2: rgba(15, 24, 44, 0.9);
-  --ink: #f3f7ff;
+  --bg: #03050c;
+  --bg-2: #070b17;
+  --card: rgba(9, 14, 28, 0.65);
+  --card-2: rgba(14, 21, 40, 0.75);
+  --ink: #f8fafc;
   --ink-soft: #94a3b8;
-  --line: rgba(148, 163, 184, 0.18);
-  --line-strong: rgba(96, 165, 250, 0.28);
-  --shadow: 0 24px 60px rgba(0, 0, 0, 0.38);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(96, 165, 250, 0.4);
+  --shadow: 0 32px 64px -12px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.1);
   --blue: #60a5fa;
-  --green: #34d399;
+  --green: #22c55e;
   --amber: #f59e0b;
-  --rose: #fb7185;
-  --indigo: #818cf8;
-  --teal: #2dd4bf;
-  --slate: #94a3b8;
-  --radius-xl: 28px;
+  --rose: #f43f5e;
+  --indigo: #6366f1;
+  --teal: #14b8a6;
+  --slate: #64748b;
+  --radius-xl: 32px;
   --radius-lg: 20px;
   --radius-md: 14px;
   --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-  --sans: "Space Grotesk", "Segoe UI", sans-serif;
+  --sans: "Outfit", "Space Grotesk", "Segoe UI", sans-serif;
 }
 
 * {
@@ -30,16 +30,33 @@ html {
   scroll-behavior: smooth;
 }
 
+@keyframes gradientBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseUpdate {
+  0% { color: var(--green); transform: scale(1.05); text-shadow: 0 0 12px var(--green); }
+  100% { color: inherit; transform: scale(1); text-shadow: none; }
+}
+
+.pulse-update {
+  animation: pulseUpdate 0.4s ease-out;
+}
+
 body {
   margin: 0;
   min-height: 100vh;
   color: var(--ink);
   font-family: var(--sans);
-  background:
-    radial-gradient(circle at top left, rgba(45, 212, 191, 0.12), transparent 26%),
-    radial-gradient(circle at top right, rgba(96, 165, 250, 0.16), transparent 26%),
-    radial-gradient(circle at bottom, rgba(245, 158, 11, 0.1), transparent 32%),
-    linear-gradient(180deg, #04070f 0%, #07101f 45%, #04070f 100%);
+  background: 
+    radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.15), transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(45, 212, 191, 0.15), transparent 35%),
+    radial-gradient(circle at 50% 100%, rgba(244, 63, 94, 0.1), transparent 45%),
+    linear-gradient(215deg, #03050c, #0d1226, #03050c);
+  background-size: 200% 200%;
+  animation: gradientBg 25s ease infinite;
 }
 
 button,
@@ -58,10 +75,10 @@ textarea {
 .hero,
 .card {
   background: var(--card);
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow);
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(32px) saturate(140%);
 }
 
 .hero {
@@ -102,9 +119,16 @@ textarea {
 .metric-card {
   padding: 16px 18px;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--line);
-  background:
-    linear-gradient(180deg, rgba(15, 23, 42, 0.84), rgba(11, 18, 36, 0.94));
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(11, 18, 36, 0.8));
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.15);
 }
 
 .metric-card span {
@@ -182,18 +206,21 @@ textarea {
   align-items: center;
   justify-content: center;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(15, 23, 42, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(12px);
   color: var(--ink);
-  padding: 10px 16px;
+  padding: 10px 18px;
   cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
 }
 
 .button:hover:not(:disabled) {
-  transform: translateY(-1px);
-  border-color: var(--line-strong);
-  background: rgba(20, 31, 58, 0.92);
+  transform: translateY(-2px) scale(1.03);
+  border-color: rgba(96, 165, 250, 0.6);
+  background: rgba(20, 31, 58, 0.9);
+  box-shadow: 0 8px 24px rgba(96, 165, 250, 0.3);
 }
 
 .button:disabled {
@@ -204,6 +231,11 @@ textarea {
 .button--primary {
   border-color: transparent;
   background: linear-gradient(135deg, #2563eb, #38bdf8);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.4);
+}
+
+.button--primary:hover:not(:disabled) {
+  box-shadow: 0 8px 24px rgba(37, 99, 235, 0.6);
 }
 
 .button--ghost {
