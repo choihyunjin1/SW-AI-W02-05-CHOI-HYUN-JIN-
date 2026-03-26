@@ -685,7 +685,7 @@ textarea {
 }
 
 .runtime-list-wrapper.is-collapsed .runtime-list-container {
-  max-height: 520px;
+  max-height: 360px;
   overflow: hidden;
 }
 
